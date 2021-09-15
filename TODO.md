@@ -1,4 +1,5 @@
 -   Usage with HTTP libraries section
+-   catch, finally, allSettled, .etc
 -   lint-staged
 -   TypeDoc
 -   Bundle for release
