@@ -5,6 +5,7 @@ babel.config.js
 lint-staged.config.js
 .eslintrc.js
 .eslintignore
+.prettierrc.js
 jest.config.js
 rc-promise.code-workspace
 typedoc.json
