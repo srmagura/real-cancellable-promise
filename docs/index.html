@@ -1,0 +1,157 @@
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>rc-promise</title><meta name="description" content="Documentation for rc-promise"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">rc-promise</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>rc-promise</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#work-in-progress" id="work-in-progress" style="color: inherit; text-decoration: none;">
+  <h1>WORK IN PROGRESS</h1>
+</a>
+
+<a href="#rc-promise--real-cancellable-promise" id="rc-promise--real-cancellable-promise" style="color: inherit; text-decoration: none;">
+  <h1>rc-promise — Real Cancellable Promise</h1>
+</a>
+<p>A simple cancellable promise implementation for JavaScript and TypeScript.
+Unlike
+<a href="https://www.npmjs.com/package/make-cancellable-promise">make-cancellable-promise</a>
+which only prevents your promise&#39;s callbacks from executing, <strong><code>rc-promise</code>
+cancels the underlying asynchronous operation (usually an HTTP call).</strong> That&#39;s
+why it&#39;s called <strong>Real</strong> Cancellable Promise.</p>
+<ul>
+<li>⚡ Compatible with <a href="#fetch">fetch</a>, <a href="#axios">axios</a>, and
+<a href="#jQuery">jQuery.ajax</a></li>
+<li>⚛ Built with React in mind — no more &quot;setState after unmount&quot; errors!</li>
+<li>🐦 Lightweight — zero dependencies and only <strong>PUT THE BUNDLE SIZE HERE LOL</strong>
+minified and gzipped</li>
+<li>🏭 Used in production by <a href="http://www.iticentral.com/">Interface
+Technologies</a></li>
+<li>💻 Optimized for TypeScript</li>
+<li>🔎 Compatible with
+<a href="https://react-query.tanstack.com/guides/query-cancellation">react-query</a>
+query cancellation out of the box</li>
+</ul>
+
+<a href="#the-basics" id="the-basics" style="color: inherit; text-decoration: none;">
+  <h1>The Basics</h1>
+</a>
+<pre><code><span class="hl-3">yarn</span><span class="hl-1"> </span><span class="hl-3">add</span><span class="hl-1"> </span><span class="hl-3">rc</span><span class="hl-1">-</span><span class="hl-3">promise</span>
+</code></pre>
+<hr>
+<pre><code class="language-ts"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-3">CancellablePromise</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-8">&#39;rc-promise&#39;</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">cancellablePromise</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-2">CancellablePromise</span><span class="hl-1">(</span><span class="hl-3">normalPromise</span><span class="hl-1">, </span><span class="hl-3">cancel</span><span class="hl-1">)</span><br/><br/><span class="hl-7">// Later...</span><br/><span class="hl-3">cancellablePromise</span><span class="hl-1">.</span><span class="hl-2">cancel</span><span class="hl-1">()</span><br/><br/><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-3">cancellablePromise</span><span class="hl-1"> </span><span class="hl-7">// throws a Cancellation object that subclasses Error</span>
+</code></pre>
+
+<a href="#usage-with-http-libraries" id="usage-with-http-libraries" style="color: inherit; text-decoration: none;">
+  <h1>Usage with HTTP Libraries</h1>
+</a>
+<p>How do I convert a normal <code>Promise</code> to a <code>CancellablePromise</code>?</p>
+
+<a href="#fetch" id="fetch" style="color: inherit; text-decoration: none;">
+  <h2><a name="fetch" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">fetch</a></h2>
+</a>
+<p>TODO</p>
+
+<a href="#axios" id="axios" style="color: inherit; text-decoration: none;">
+  <h2><a name="axios" href="https://axios-http.com/">axios</a></h2>
+</a>
+<p>TODO</p>
+
+<a href="#jqueryajax" id="jqueryajax" style="color: inherit; text-decoration: none;">
+  <h2><a name="jQuery" href="https://api.jquery.com/category/ajax/">jQuery.ajax</a></h2>
+</a>
+<p>TODO</p>
+
+<a href="#api-reference" id="api-reference" style="color: inherit; text-decoration: none;">
+  <h1><a href="https://srmagura.github.io/rc-promise">API Reference</a></h1>
+</a>
+<p><code>CancellablePromise</code> supports all the methods that the normal <code>Promise</code> object
+supports. See the <a href="https://srmagura.github.io/rc-promise">API Reference</a> for
+details.</p>
+
+<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+  <h1>Examples</h1>
+</a>
+
+<a href="#react-prevent-setstate-after-unmount" id="react-prevent-setstate-after-unmount" style="color: inherit; text-decoration: none;">
+  <h2>React: Prevent setState after unmount</h2>
+</a>
+<p>React will give you a warning if you attempt to update a component&#39;s state after
+it has unmounted. This will happen if your component makes an API call but gets
+unmounted before the API call completes.</p>
+<p>You can fix this by canceling the API call in the cleanup function of an effect.</p>
+<pre><code class="language-ts"><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">listBlogPosts</span><span class="hl-1">(): </span><span class="hl-4">CancellablePromise</span><span class="hl-1">&lt;</span><span class="hl-4">Post</span><span class="hl-1">[]&gt; {</span><br/><span class="hl-1">    </span><span class="hl-7">// call the API</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">Blog</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-0">const</span><span class="hl-1"> [</span><span class="hl-6">posts</span><span class="hl-1">, </span><span class="hl-6">setPosts</span><span class="hl-1">] = </span><span class="hl-2">useState</span><span class="hl-1">&lt;</span><span class="hl-4">Post</span><span class="hl-1">[]&gt;([])</span><br/><br/><span class="hl-1">    </span><span class="hl-2">useEffect</span><span class="hl-1">(() </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">cancellablePromise</span><span class="hl-1"> = </span><span class="hl-2">listBlogPosts</span><span class="hl-1">().</span><span class="hl-2">then</span><span class="hl-1">(</span><span class="hl-3">setPosts</span><span class="hl-1">).</span><span class="hl-2">catch</span><span class="hl-1">(</span><span class="hl-3">console</span><span class="hl-1">.</span><span class="hl-3">error</span><span class="hl-1">)</span><br/><br/><span class="hl-1">        </span><span class="hl-7">// The promise will get canceled when the component unmounts</span><br/><span class="hl-1">        </span><span class="hl-5">return</span><span class="hl-1"> </span><span class="hl-3">cancellablePromise</span><span class="hl-1">.</span><span class="hl-3">cancel</span><br/><span class="hl-1">    }, [])</span><br/><br/><span class="hl-1">    </span><span class="hl-5">return</span><span class="hl-1"> &lt;</span><span class="hl-4">div</span><span class="hl-1">&gt;{posts.map(</span><span class="hl-3">p</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-7">/* ... */</span><span class="hl-1">)}&lt;/</span><span class="hl-3">div</span><span class="hl-1">&gt;</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p><a href="TODO">CodeSandbox</a></p>
+
+<a href="#react-cancel-the-in-progress-api-call-when-query-parameters-change" id="react-cancel-the-in-progress-api-call-when-query-parameters-change" style="color: inherit; text-decoration: none;">
+  <h2>React: Cancel the in-progress API call when query parameters change</h2>
+</a>
+<p>Sometimes API calls have parameters, like a search string entered by the user.</p>
+<pre><code class="language-ts"><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">searchUsers</span><span class="hl-1">(</span><span class="hl-3">searchTerm</span><span class="hl-1">: </span><span class="hl-4">string</span><span class="hl-1">): </span><span class="hl-4">CancellablePromise</span><span class="hl-1">&lt;</span><span class="hl-4">User</span><span class="hl-1">[]&gt; {</span><br/><span class="hl-1">    </span><span class="hl-7">// call the API</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">UserList</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-0">const</span><span class="hl-1"> [</span><span class="hl-6">searchTerm</span><span class="hl-1">, </span><span class="hl-6">setSearchTerm</span><span class="hl-1">] = </span><span class="hl-2">useState</span><span class="hl-1">(</span><span class="hl-8">&#39;&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">    </span><span class="hl-0">const</span><span class="hl-1"> [</span><span class="hl-6">users</span><span class="hl-1">, </span><span class="hl-6">setUsers</span><span class="hl-1">] = </span><span class="hl-2">useState</span><span class="hl-1">&lt;</span><span class="hl-4">User</span><span class="hl-1">[]&gt;([])</span><br/><br/><span class="hl-1">    </span><span class="hl-7">// In a real app you should debounce the searchTerm</span><br/><span class="hl-1">    </span><span class="hl-2">useEffect</span><span class="hl-1">(() </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">cancellablePromise</span><span class="hl-1"> = </span><span class="hl-2">searchUsers</span><span class="hl-1">(</span><span class="hl-3">searchTerm</span><span class="hl-1">).</span><span class="hl-2">then</span><span class="hl-1">(</span><span class="hl-3">setUsers</span><span class="hl-1">).</span><span class="hl-2">catch</span><span class="hl-1">(</span><span class="hl-3">console</span><span class="hl-1">.</span><span class="hl-3">error</span><span class="hl-1">)</span><br/><br/><span class="hl-1">        </span><span class="hl-7">// The old API call gets canceled whenever searchTerm changes. This prevents</span><br/><span class="hl-1">        </span><span class="hl-7">// setUsers from being called with incorrect results if the API calls complete</span><br/><span class="hl-1">        </span><span class="hl-7">// out of order.</span><br/><span class="hl-1">        </span><span class="hl-5">return</span><span class="hl-1"> </span><span class="hl-3">cancellablePromise</span><span class="hl-1">.</span><span class="hl-3">cancel</span><br/><span class="hl-1">    }, [</span><span class="hl-3">searchTerm</span><span class="hl-1">])</span><br/><br/><span class="hl-1">    </span><span class="hl-5">return</span><span class="hl-1"> (</span><br/><span class="hl-1">        &lt;</span><span class="hl-4">div</span><span class="hl-1">&gt;</span><br/><span class="hl-1">            &lt;</span><span class="hl-3">SearchInput</span><span class="hl-1"> </span><span class="hl-3">searchTerm</span><span class="hl-1">={</span><span class="hl-3">searchTerm</span><span class="hl-1">} </span><span class="hl-3">onChange</span><span class="hl-1">={</span><span class="hl-3">setSearchTerm</span><span class="hl-1">} /&gt;</span><br/><span class="hl-1">            {</span><span class="hl-3">users</span><span class="hl-1">.</span><span class="hl-3">map</span><span class="hl-1">(</span><span class="hl-3">p</span><span class="hl-1"> =&gt; </span><span class="hl-7">/* ... */</span><span class="hl-1">)}</span><br/><span class="hl-1">        &lt;/</span><span class="hl-3">div</span><span class="hl-1">&gt;</span><br/><span class="hl-1">    )</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p><a href="TODO">CodeSandbox</a></p>
+
+<a href="#combine-multiple-api-calls-into-a-single-async-flow" id="combine-multiple-api-calls-into-a-single-async-flow" style="color: inherit; text-decoration: none;">
+  <h2>Combine multiple API calls into a single async flow</h2>
+</a>
+<p>The utility function <code>buildCancellablePromise</code> lets you <code>capture</code> every
+cancellable operation in a multi-step process. In this example, if <code>bigQuery</code> is
+canceled, each of the 3 API calls will be canceled (though some might have
+already completed).</p>
+<pre><code class="language-ts"><span class="hl-0">async</span><span class="hl-1"> </span><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">bigQuery</span><span class="hl-1">(</span><span class="hl-3">userId</span><span class="hl-1">: </span><span class="hl-4">number</span><span class="hl-1">): </span><span class="hl-4">CancellablePromise</span><span class="hl-1">&lt;</span><span class="hl-4">QueryResult</span><span class="hl-1">&gt; {</span><br/><span class="hl-1">    </span><span class="hl-5">return</span><span class="hl-1"> </span><span class="hl-2">buildCancellablePromise</span><span class="hl-1">(</span><span class="hl-0">async</span><span class="hl-1"> (</span><span class="hl-3">capture</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">userPromise</span><span class="hl-1"> = </span><span class="hl-3">api</span><span class="hl-1">.</span><span class="hl-3">user</span><span class="hl-1">.</span><span class="hl-2">get</span><span class="hl-1">(</span><span class="hl-3">userId</span><span class="hl-1">)</span><br/><span class="hl-1">        </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">rolePromise</span><span class="hl-1"> = </span><span class="hl-3">api</span><span class="hl-1">.</span><span class="hl-3">user</span><span class="hl-1">.</span><span class="hl-2">listRoles</span><span class="hl-1">(</span><span class="hl-3">userId</span><span class="hl-1">)</span><br/><br/><span class="hl-1">        </span><span class="hl-0">const</span><span class="hl-1"> [</span><span class="hl-6">user</span><span class="hl-1">, </span><span class="hl-6">roles</span><span class="hl-1">] = </span><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-2">capture</span><span class="hl-1">(</span><br/><span class="hl-1">            </span><span class="hl-3">CancellablePromise</span><span class="hl-1">.</span><span class="hl-2">all</span><span class="hl-1">([</span><span class="hl-3">userPromise</span><span class="hl-1">, </span><span class="hl-3">rolePromise</span><span class="hl-1">])</span><br/><span class="hl-1">        )</span><br/><br/><span class="hl-1">        </span><span class="hl-7">// User must be loaded before this query can run</span><br/><span class="hl-1">        </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">customer</span><span class="hl-1"> = </span><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-2">capture</span><span class="hl-1">(</span><span class="hl-3">api</span><span class="hl-1">.</span><span class="hl-3">customer</span><span class="hl-1">.</span><span class="hl-2">get</span><span class="hl-1">(</span><span class="hl-3">user</span><span class="hl-1">.</span><span class="hl-3">customerId</span><span class="hl-1">))</span><br/><br/><span class="hl-1">        </span><span class="hl-5">return</span><span class="hl-1"> { </span><span class="hl-3">user</span><span class="hl-1">, </span><span class="hl-3">roles</span><span class="hl-1">, </span><span class="hl-3">customer</span><span class="hl-1"> }</span><br/><span class="hl-1">    })</span><br/><span class="hl-1">}</span>
+</code></pre>
+
+<a href="#usage-with-react-query" id="usage-with-react-query" style="color: inherit; text-decoration: none;">
+  <h2>Usage with <code>react-query</code></h2>
+</a>
+<p>If your query key changes and there&#39;s an API call in progress, <code>react-query</code>
+will cancel the <code>CancellablePromise</code> automatically.</p>
+<pre><code class="language-ts">
+</code></pre>
+<p><a href="TODO">CodeSandbox</a></p>
+
+<a href="#handling-cancellation" id="handling-cancellation" style="color: inherit; text-decoration: none;">
+  <h2>Handling <code>Cancellation</code></h2>
+</a>
+<p>Usually, you&#39;ll want to ignore <code>Cancellation</code> objects that get thrown:</p>
+<pre><code class="language-ts"><span class="hl-5">try</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-2">capture</span><span class="hl-1">(</span><span class="hl-3">cancellablePromise</span><span class="hl-1">)</span><br/><span class="hl-1">} </span><span class="hl-5">catch</span><span class="hl-1"> (</span><span class="hl-3">e</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-5">if</span><span class="hl-1"> (</span><span class="hl-3">e</span><span class="hl-1"> </span><span class="hl-0">instanceof</span><span class="hl-1"> </span><span class="hl-4">Cancellation</span><span class="hl-1">) {</span><br/><span class="hl-1">        </span><span class="hl-7">// do nothing — the component probably just unmounted.</span><br/><span class="hl-1">        </span><span class="hl-7">// or you could do something here it&#39;s up to you 😆</span><br/><span class="hl-1">        </span><span class="hl-5">return</span><br/><span class="hl-1">    }</span><br/><br/><span class="hl-1">    </span><span class="hl-7">// log the error</span><br/><span class="hl-1">}</span>
+</code></pre>
+
+<a href="#handling-promises-that-can39t-truly-be-canceled" id="handling-promises-that-can39t-truly-be-canceled" style="color: inherit; text-decoration: none;">
+  <h2>Handling promises that can&#39;t truly be canceled</h2>
+</a>
+<p>Sometimes you need to call an asynchronous function that doesn&#39;t support
+cancellation. In this case, you can use <code>pseudoCancellable</code> to prevent the
+promise from resolving after <code>cancel</code> has been called.</p>
+<pre><code class="language-ts"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">cancellablePromise</span><span class="hl-1"> = </span><span class="hl-2">pseudoCancellable</span><span class="hl-1">(</span><span class="hl-3">normalPromise</span><span class="hl-1">)</span><br/><br/><span class="hl-7">// Later...</span><br/><span class="hl-3">cancellablePromise</span><span class="hl-1">.</span><span class="hl-2">cancel</span><span class="hl-1">()</span><br/><br/><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-3">cancellablePromise</span><span class="hl-1"> </span><span class="hl-7">// throws Cancellation object</span>
+</code></pre>
+
+<a href="#cancellablepromisedelay" id="cancellablepromisedelay" style="color: inherit; text-decoration: none;">
+  <h2><code>CancellablePromise.delay</code></h2>
+</a>
+<pre><code class="language-ts"><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-3">CancellablePromise</span><span class="hl-1">.</span><span class="hl-2">delay</span><span class="hl-1">(</span><span class="hl-9">1000</span><span class="hl-1">) </span><span class="hl-7">// wait 1 second</span>
+</code></pre>
+
+<a href="#react-usecancellablepromisecleanup" id="react-usecancellablepromisecleanup" style="color: inherit; text-decoration: none;">
+  <h2>React: <code>useCancellablePromiseCleanup</code></h2>
+</a>
+<p>Here&#39;s a React hook that facilitates cancellation of <code>CancellablePromise</code>s that
+occur outside of <code>useEffect</code>. Any pending API calls will be canceled when the
+component unmounts. (Just be sure this is what you want to happen.)</p>
+<pre><code class="language-ts"><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">useCancellablePromiseCleanup</span><span class="hl-1">(): </span><span class="hl-4">CaptureCancellablePromise</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">cancellablePromisesRef</span><span class="hl-1"> = </span><span class="hl-2">useRef</span><span class="hl-1">&lt;</span><span class="hl-4">CancellablePromise</span><span class="hl-1">&lt;</span><span class="hl-4">unknown</span><span class="hl-1">&gt;[]&gt;([])</span><br/><br/><span class="hl-1">    </span><span class="hl-2">useEffect</span><span class="hl-1">(</span><br/><span class="hl-1">        () </span><span class="hl-0">=&gt;</span><span class="hl-1"> (): </span><span class="hl-4">void</span><span class="hl-1"> </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">            </span><span class="hl-5">for</span><span class="hl-1"> (</span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">promise</span><span class="hl-1"> </span><span class="hl-0">of</span><span class="hl-1"> </span><span class="hl-3">cancellablePromisesRef</span><span class="hl-1">.</span><span class="hl-3">current</span><span class="hl-1">) {</span><br/><span class="hl-1">                </span><span class="hl-3">promise</span><span class="hl-1">.</span><span class="hl-2">cancel</span><span class="hl-1">()</span><br/><span class="hl-1">            }</span><br/><span class="hl-1">        },</span><br/><span class="hl-1">        []</span><br/><span class="hl-1">    )</span><br/><br/><span class="hl-1">    </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">capture</span><span class="hl-1">: </span><span class="hl-4">CaptureCancellablePromise</span><span class="hl-1"> = </span><span class="hl-2">useCallback</span><span class="hl-1">((</span><span class="hl-3">promise</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-3">cancellablePromisesRef</span><span class="hl-1">.</span><span class="hl-3">current</span><span class="hl-1">.</span><span class="hl-2">push</span><span class="hl-1">(</span><span class="hl-3">promise</span><span class="hl-1">)</span><br/><span class="hl-1">        </span><span class="hl-5">return</span><span class="hl-1"> </span><span class="hl-3">promise</span><br/><span class="hl-1">    }, [])</span><br/><br/><span class="hl-1">    </span><span class="hl-5">return</span><span class="hl-1"> </span><span class="hl-3">capture</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>Then in your React components...</p>
+<pre><code class="language-ts"><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">updateUser</span><span class="hl-1">(</span><span class="hl-3">id</span><span class="hl-1">: </span><span class="hl-4">number</span><span class="hl-1">, </span><span class="hl-3">name</span><span class="hl-1">: </span><span class="hl-4">string</span><span class="hl-1">): </span><span class="hl-4">CancellablePromise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt; {</span><br/><span class="hl-1">    </span><span class="hl-7">// call the API</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">UserDetail</span><span class="hl-1">(</span><span class="hl-3">props</span><span class="hl-1">: </span><span class="hl-4">UserDetailProps</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">capture</span><span class="hl-1"> = </span><span class="hl-2">useCancellablePromiseCleanup</span><span class="hl-1">()</span><br/><br/><span class="hl-1">    </span><span class="hl-0">async</span><span class="hl-1"> </span><span class="hl-0">function</span><span class="hl-1"> </span><span class="hl-2">saveChanges</span><span class="hl-1">(): </span><span class="hl-4">Promise</span><span class="hl-1">&lt;</span><span class="hl-4">void</span><span class="hl-1">&gt; {</span><br/><span class="hl-1">        </span><span class="hl-5">try</span><span class="hl-1"> {</span><br/><span class="hl-1">            </span><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-2">capture</span><span class="hl-1">(</span><span class="hl-2">updateUser</span><span class="hl-1">(</span><span class="hl-3">id</span><span class="hl-1">, </span><span class="hl-3">name</span><span class="hl-1">))</span><br/><span class="hl-1">        } </span><span class="hl-5">catch</span><span class="hl-1"> {</span><br/><span class="hl-1">            </span><span class="hl-7">// ...</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    }</span><br/><br/><span class="hl-1">    </span><span class="hl-5">return</span><span class="hl-1"> &lt;</span><span class="hl-4">div</span><span class="hl-1">&gt;...&lt;/</span><span class="hl-3">div</span><span class="hl-1">&gt;</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p><a href="TODO">CodeSandbox</a></p>
+
+<a href="#supported-platforms" id="supported-platforms" style="color: inherit; text-decoration: none;">
+  <h1>Supported Platforms</h1>
+</a>
+<p><strong>Browser:</strong> anything that&#39;s not Internet Explorer<br><strong>React Native / Expo:</strong> should work in any recent release
+<strong>Node.js:</strong> current release and all maintained LTS releases</p>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h1>License</h1>
+</a>
+<p>MIT</p>
+
+<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+  <h1>Contributing</h1>
+</a>
+<p>See <code>internal-docs/Contributing.md</code>.</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/CancellablePromise.html" class="tsd-kind-icon">Cancellable<wbr/>Promise</a></li><li class="tsd-kind-class"><a href="classes/Cancellation.html" class="tsd-kind-icon">Cancellation</a></li><li class="tsd-kind-type-alias"><a href="modules.html#CaptureCancellablePromise" class="tsd-kind-icon">Capture<wbr/>Cancellable<wbr/>Promise</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#PromiseWithCancel" class="tsd-kind-icon">Promise<wbr/>With<wbr/>Cancel</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#buildCancellablePromise" class="tsd-kind-icon">build<wbr/>Cancellable<wbr/>Promise</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#pseudoCancellable" class="tsd-kind-icon">pseudo<wbr/>Cancellable</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

@@ -23,7 +23,7 @@ why it's called **Real** Cancellable Promise.
 
 # The Basics
 
-```
+```bash
 yarn add rc-promise
 ```
 
@@ -32,7 +32,6 @@ import { CancellablePromise } from 'rc-promise'
 
 const cancellablePromise = new CancellablePromise(normalPromise, cancel)
 
-// Later...
 cancellablePromise.cancel()
 
 await cancellablePromise // throws a Cancellation object that subclasses Error
@@ -191,7 +190,7 @@ const cancellablePromise = pseudoCancellable(normalPromise)
 // Later...
 cancellablePromise.cancel()
 
-await cancellablePromise // throws Cancellation object
+await cancellablePromise // throws Cancellation object if promise did not already resolve
 ```
 
 ## `CancellablePromise.delay`
@@ -255,8 +254,13 @@ export function UserDetail(props: UserDetailProps) {
 # Supported Platforms
 
 **Browser:** anything that's not Internet Explorer  
+**React Native / Expo:** should work in any recent release  
 **Node.js:** current release and all maintained LTS releases
 
 # License
 
 MIT
+
+# Contributing
+
+See `internal-docs/Contributing.md`.
