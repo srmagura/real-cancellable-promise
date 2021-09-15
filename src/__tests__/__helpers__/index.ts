@@ -1,6 +1,10 @@
 import { CancellablePromise } from '../../CancellablePromise'
 import { Cancellation } from '../../Cancellation'
 
+export function fail(): never {
+    throw new Error('fail was called in a test.')
+}
+
 export function delay(duration: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, duration))
 }

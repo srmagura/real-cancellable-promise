@@ -1,9 +1,11 @@
 // Jest bug: https://github.com/facebook/jest/issues/11876
+// Jest bug 2: https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/55803
 import { CancellablePromise } from '../CancellablePromise'
 import { Cancellation } from '../Cancellation'
-import { defaultDuration, delay, getPromise } from './__helpers__'
+import { defaultDuration, delay, getPromise, fail } from './__helpers__'
 
 beforeEach(() => {
+    jest.resetAllMocks()
     jest.useFakeTimers()
 })
 
@@ -121,6 +123,37 @@ describe('then', () => {
         p.cancel()
 
         await expect(p).rejects.toThrow(Cancellation)
+    })
+})
+
+describe('catch', () => {
+    it('resolves', async () => {
+        const p = getPromise(1).catch(fail)
+        jest.runAllTimers()
+
+        expect(await p).toBe(1)
+    })
+
+    it('handles rejection', async () => {
+        const p = getPromise(1, { shouldResolve: false }).catch((e) => {
+            expect(e).toBeInstanceOf(Error)
+            expect(e.message).toBe('myError')
+
+            return 'handled'
+        })
+        jest.runAllTimers()
+
+        expect(await p).toBe('handled')
+    })
+
+    it('cancels the original promise', async () => {
+        const errorHandler = jest.fn()
+        const p = getPromise(1, { shouldResolve: false }).catch(errorHandler)
+        p.cancel()
+        jest.runAllTimers()
+
+        expect(await p).toBeUndefined()
+        expect(errorHandler).toHaveBeenCalledWith(new Cancellation())
     })
 })
 

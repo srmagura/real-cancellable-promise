@@ -95,6 +95,15 @@ export class CancellablePromise<T> {
     }
 
     /**
+     * Analogous to `Promise.catch`.
+     */
+    catch<TResult = never>(
+        onRejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+    ): CancellablePromise<T | TResult> {
+        return this.then(undefined, onRejected)
+    }
+
+    /**
      * Analogous to `Promise.resolve`.
      *
      * The returned promise should resolve even if it is canceled.
