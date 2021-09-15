@@ -12,7 +12,7 @@ why it's called **Real** Cancellable Promise.
 -   ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
     [jQuery.ajax](#jQuery)
 -   ⚛ Built with React in mind — no more "setState after unmount" errors!
--   🐦 Lightweight — zero dependencies and only **PUT THE BUNDLE SIZE HERE LOL**
+-   🐦 Lightweight — zero dependencies and less than 1 kB
     minified and gzipped
 -   🏭 Used in production by [Interface
     Technologies](http://www.iticentral.com/)
