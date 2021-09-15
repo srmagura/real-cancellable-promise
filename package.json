@@ -1,17 +1,17 @@
 {
-    "name": "rc-promise",
-    "version": "1.0.0-alpha.1",
+    "name": "real-cancellable-promise",
+    "version": "1.0.0-alpha.0",
     "description": "A simple cancellable promise implementation that cancels the underlying HTTP call.",
     "keywords": [
         "promise",
         "cancellable-promise",
         "react"
     ],
-    "homepage": "https://github.com/srmagura/rc-promise",
-    "bugs": "https://github.com/srmagura/rc-promise/issues",
+    "homepage": "https://github.com/srmagura/real-cancellable-promise",
+    "bugs": "https://github.com/srmagura/real-cancellable-promise/issues",
     "repository": {
         "type": "git",
-        "url": "https://github.com/srmagura/rc-promise.git"
+        "url": "https://github.com/srmagura/real-cancellable-promise.git"
     },
     "license": "MIT",
     "main": "dist/index.js",

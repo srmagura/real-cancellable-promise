@@ -1,11 +1,11 @@
 # WORK IN PROGRESS
 
-# rc-promise — Real Cancellable Promise
+# real-cancellable-promise
 
 A simple cancellable promise implementation for JavaScript and TypeScript.
-Unlike
+Unlike [p-cancelable](https://www.npmjs.com/package/p-cancelable) and
 [make-cancellable-promise](https://www.npmjs.com/package/make-cancellable-promise)
-which only prevents your promise's callbacks from executing, **`rc-promise`
+which only prevent your promise's callbacks from executing, **`real-cancellable-promise`
 cancels the underlying asynchronous operation (usually an HTTP call).** That's
 why it's called **Real** Cancellable Promise.
 
@@ -24,11 +24,11 @@ why it's called **Real** Cancellable Promise.
 # The Basics
 
 ```bash
-yarn add rc-promise
+yarn add real-cancellable-promise
 ```
 
 ```ts
-import { CancellablePromise } from 'rc-promise'
+import { CancellablePromise } from 'real-cancellable-promise'
 
 const cancellablePromise = new CancellablePromise(normalPromise, cancel)
 
@@ -53,10 +53,10 @@ TODO
 
 TODO
 
-# [API Reference](https://srmagura.github.io/rc-promise)
+# [API Reference](https://srmagura.github.io/real-cancellable-promise)
 
 `CancellablePromise` supports all the methods that the normal `Promise` object
-supports, with the exception of `Promise.any` (ES2021). See the [API Reference](https://srmagura.github.io/rc-promise) for
+supports, with the exception of `Promise.any` (ES2021). See the [API Reference](https://srmagura.github.io/real-cancellable-promise) for
 details.
 
 # Examples
@@ -255,7 +255,7 @@ export function UserDetail(props: UserDetailProps) {
 
 **Browser:** anything that's not Internet Explorer  
 **React Native / Expo:** should work in any recent release  
-**Node.js:** current release and all maintained LTS releases
+**Node.js:** current release and active LTS releases
 
 # License
 
