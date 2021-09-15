@@ -305,6 +305,40 @@ describe('all', () => {
     })
 })
 
+describe('race', () => {
+    it('never resolves if no arguments given', async () => {
+        CancellablePromise.race([]).then(fail).catch(fail)
+        jest.runAllTimers()
+    })
+
+    it('resolves', async () => {
+        const p = CancellablePromise.race([CancellablePromise.resolve(0), getPromise(1)])
+
+        expect(await p).toBe(0)
+    })
+
+    it('rejects', async () => {
+        const p = CancellablePromise.race([
+            CancellablePromise.reject(new Error('myError')),
+            getPromise(1),
+        ])
+        jest.runAllTimers()
+
+        await expect(p).rejects.toThrow('myError')
+    })
+
+    it('cancels all promises', async () => {
+        const p0 = getPromise(0).then(fail)
+        const p1 = getPromise(1).then(fail)
+
+        const race = CancellablePromise.race([p0, p1])
+        race.cancel()
+        jest.runAllTimers()
+
+        await expect(race).rejects.toThrow(Cancellation)
+    })
+})
+
 describe('delay', () => {
     it('delays', async () => {
         let resolved = false

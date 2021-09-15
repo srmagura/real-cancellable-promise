@@ -233,9 +233,28 @@ export class CancellablePromise<T> {
     static all<T>(promises: CancellablePromise<T>[]): CancellablePromise<T[]>
 
     static all(promises: CancellablePromise<unknown>[]): CancellablePromise<unknown> {
-        return new CancellablePromise(Promise.all(promises), () =>
-            promises.forEach((p) => p.cancel())
-        )
+        return new CancellablePromise(Promise.all(promises), () => {
+            for (const p of promises) {
+                p.cancel()
+            }
+        })
+    }
+
+    /**
+     * Analogous to `Promise.race`.
+     */
+    static race<T>(
+        values: readonly T[]
+    ): CancellablePromise<T extends PromiseLike<infer U> ? U : T> {
+        const cancel = (): void => {
+            for (const value of values) {
+                if (isPromiseWithCancel(value)) {
+                    value.cancel()
+                }
+            }
+        }
+
+        return new CancellablePromise(Promise.race(values), cancel)
     }
 
     /**
