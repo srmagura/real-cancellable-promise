@@ -1,6 +1,6 @@
 # WORK IN PROGRESS
 
-# rc-promise - Real Cancellable Promise
+# rc-promise — Real Cancellable Promise
 
 A simple cancellable promise implementation for JavaScript and TypeScript.
 Unlike
