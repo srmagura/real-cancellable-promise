@@ -1,14 +1,26 @@
 {
     "name": "rc-promise",
-    "version": "1.0.0-alpha.0",
+    "version": "1.0.0-alpha.1",
+    "description": "A simple cancellable promise implementation that cancels the underlying HTTP call.",
+    "keywords": [
+        "promise",
+        "cancellable-promise",
+        "react"
+    ],
+    "homepage": "https://github.com/srmagura/rc-promise",
+    "bugs": "https://github.com/srmagura/rc-promise/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/srmagura/rc-promise.git"
+    },
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc",
         "test": "jest",
         "lint": "eslint"
     },
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "packageManager": "yarn@3.0.2",
     "devDependencies": {
         "@babel/core": "^7.15.5",
         "@babel/preset-env": "^7.15.6",
@@ -27,5 +39,6 @@
         "prettier": "^2.4.0",
         "typedoc": "^0.22.3",
         "typescript": "^4.4.3"
-    }
+    },
+    "packageManager": "yarn@3.0.2"
 }
