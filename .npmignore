@@ -7,6 +7,6 @@ lint-staged.config.js
 .eslintignore
 .prettierrc.js
 jest.config.js
-rc-promise.code-workspace
+real-cancellable-promise.code-workspace
 typedoc.json
 tsconfig.json
