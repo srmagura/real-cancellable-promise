@@ -1,6 +1,6 @@
 {
     "name": "real-cancellable-promise",
-    "version": "1.0.0-alpha.0",
+    "version": "1.0.0-alpha.1",
     "description": "A simple cancellable promise implementation that cancels the underlying HTTP call.",
     "keywords": [
         "promise",
@@ -19,7 +19,8 @@
     "scripts": {
         "build": "tsc",
         "test": "jest",
-        "lint": "eslint"
+        "lint": "eslint",
+        "prepublish": "yarn build"
     },
     "devDependencies": {
         "@babel/core": "^7.15.5",
