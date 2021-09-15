@@ -387,6 +387,36 @@ describe('finally', () => {
     })
 })
 
+describe('allSettled', () => {
+    it('resolves', async () => {
+        const p1 = CancellablePromise.resolve(1)
+        const p2 = delay(defaultDuration)
+        const p3 = getPromise(3, { shouldResolve: false })
+
+        jest.runAllTimers()
+        const [r1, r2, r3] = await CancellablePromise.allSettled([p1, p2, p3])
+        expect(r1).toEqual({ status: 'fulfilled', value: 1 })
+        expect(r2).toEqual({ status: 'fulfilled', value: undefined })
+        expect(r3).toEqual({ status: 'rejected', reason: new Error('myError') })
+    })
+
+    it('resolves and cancels all promises when canceled', async () => {
+        const p1 = getPromise(1).then(fail)
+        const p2 = delay(defaultDuration)
+        const p3 = getPromise(3, { shouldResolve: false })
+
+        const allSettled = CancellablePromise.allSettled([p1, p2, p3])
+        allSettled.cancel()
+
+        jest.runAllTimers()
+
+        const [r1, r2, r3] = await allSettled
+        expect(r1).toEqual({ status: 'rejected', reason: new Cancellation() })
+        expect(r2).toEqual({ status: 'fulfilled', value: undefined })
+        expect(r3).toEqual({ status: 'rejected', reason: new Cancellation() })
+    })
+})
+
 describe('delay', () => {
     it('delays', async () => {
         let resolved = false

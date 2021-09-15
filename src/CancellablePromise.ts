@@ -251,6 +251,42 @@ export class CancellablePromise<T> {
     }
 
     /**
+     * Creates a `CancellablePromise` that is resolved with an array of results when all
+     * of the provided `Promises` resolve or reject.
+     * @param values An array of `Promises`.
+     * @returns A new `CancellablePromise`.
+     */
+    static allSettled<T extends readonly unknown[] | readonly [unknown]>(
+        values: T
+    ): CancellablePromise<{
+        -readonly [P in keyof T]: PromiseSettledResult<
+            T[P] extends PromiseLike<infer U> ? U : T[P]
+        >
+    }>
+
+    /**
+     * Creates a `CancellablePromise` that is resolved with an array of results when all
+     * of the provided `Promises` resolve or reject.
+     * @param values An array of `Promises`.
+     * @returns A new `CancellablePromise`.
+     */
+    static allSettled<T>(
+        values: Iterable<T>
+    ): CancellablePromise<PromiseSettledResult<T extends PromiseLike<infer U> ? U : T>[]>
+
+    static allSettled(values: unknown[]): CancellablePromise<unknown> {
+        const cancel = (): void => {
+            for (const value of values) {
+                if (isPromiseWithCancel(value)) {
+                    value.cancel()
+                }
+            }
+        }
+
+        return new CancellablePromise(Promise.allSettled(values), cancel)
+    }
+
+    /**
      * Creates a `CancellablePromise` that is resolved or rejected when any of the provided `Promises` are resolved
      * or rejected.
      * @param values An array of `Promises`.
