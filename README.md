@@ -56,7 +56,7 @@ TODO
 # [API Reference](https://srmagura.github.io/rc-promise)
 
 `CancellablePromise` supports all the methods that the normal `Promise` object
-supports. See the [API Reference](https://srmagura.github.io/rc-promise) for
+supports, with the exception of `Promise.any` (ES2021). See the [API Reference](https://srmagura.github.io/rc-promise) for
 details.
 
 # Examples
