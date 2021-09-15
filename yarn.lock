@@ -5400,30 +5400,6 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"rc-promise@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "rc-promise@workspace:."
-  dependencies:
-    "@babel/core": ^7.15.5
-    "@babel/preset-env": ^7.15.6
-    "@babel/preset-typescript": ^7.15.0
-    "@types/jest": ^27.0.1
-    "@typescript-eslint/eslint-plugin": ^4.31.1
-    "@typescript-eslint/parser": ^4.31.1
-    babel-jest: ^27.2.0
-    eslint: ^7.32.0
-    eslint-config-airbnb-base: ^14.2.1
-    eslint-config-airbnb-typescript: ^14.0.0
-    eslint-config-prettier: ^8.3.0
-    eslint-plugin-import: ^2.24.2
-    eslint-plugin-promise: ^5.1.0
-    jest: ^27.2.0
-    prettier: ^2.4.0
-    typedoc: ^0.22.3
-    typescript: ^4.4.3
-  languageName: unknown
-  linkType: soft
-
 "react-is@npm:^17.0.1":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
@@ -5466,6 +5442,30 @@ fsevents@^2.3.2:
   checksum: e4920cf7549a60f8aaf694d483a0e61b2a878b969d224f89b3bc788b8d920075132c4b55a7494ee944c7b6a9a0eada28a7f6220d80b0312ece70bbf08eeca755
   languageName: node
   linkType: hard
+
+"real-cancellable-promise@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "real-cancellable-promise@workspace:."
+  dependencies:
+    "@babel/core": ^7.15.5
+    "@babel/preset-env": ^7.15.6
+    "@babel/preset-typescript": ^7.15.0
+    "@types/jest": ^27.0.1
+    "@typescript-eslint/eslint-plugin": ^4.31.1
+    "@typescript-eslint/parser": ^4.31.1
+    babel-jest: ^27.2.0
+    eslint: ^7.32.0
+    eslint-config-airbnb-base: ^14.2.1
+    eslint-config-airbnb-typescript: ^14.0.0
+    eslint-config-prettier: ^8.3.0
+    eslint-plugin-import: ^2.24.2
+    eslint-plugin-promise: ^5.1.0
+    jest: ^27.2.0
+    prettier: ^2.4.0
+    typedoc: ^0.22.3
+    typescript: ^4.4.3
+  languageName: unknown
+  linkType: soft
 
 "regenerate-unicode-properties@npm:^9.0.0":
   version: 9.0.0

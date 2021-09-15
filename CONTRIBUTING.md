@@ -1,4 +1,4 @@
-# Contributing to rc-promise
+# Contributing to real-cancellable-promise
 
 Contributions are welcome.
 
@@ -15,4 +15,4 @@ You can build the API documentation by running `yarn typedoc`.
 
 ## Test Projects Repository
 
-There are some test projects that use `rc-promise` in the [rc-promise-test-projects]() repository.
+There are some test projects that use `real-cancellable-promise` in the [real-cancellable-promise-test-projects](https://github.com/srmagura/real-cancellable-promise-test-projects) repository.
