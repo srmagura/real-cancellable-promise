@@ -1,3 +1,5 @@
+# WORK IN PROGRESS
+
 # rc-promise - Real Cancellable Promise
 
 A simple cancellable promise implementation for JavaScript and TypeScript.
@@ -10,7 +12,7 @@ why it's called **Real** Cancellable Promise.
 -   ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
     [jQuery.ajax](#jQuery)
 -   ⚛ Built with React in mind — no more "setState after unmount" errors!
--   🐦 Lightweight - zero dependencies and only **PUT THE BUNDLE SIZE HERE LOL**
+-   🐦 Lightweight — zero dependencies and only **PUT THE BUNDLE SIZE HERE LOL**
     minified and gzipped
 -   🏭 Used in production by [Interface
     Technologies](http://www.iticentral.com/)
@@ -19,7 +21,7 @@ why it's called **Real** Cancellable Promise.
     [react-query](https://react-query.tanstack.com/guides/query-cancellation)
     query cancellation out of the box
 
-# Getting Started
+# The Basics
 
 ```
 yarn add rc-promise
@@ -79,7 +81,7 @@ export function Blog() {
     useEffect(() => {
         const cancellablePromise = listBlogPosts().then(setPosts).catch(console.error)
 
-        // The promise will get canceled when the componet unmounts
+        // The promise will get canceled when the component unmounts
         return cancellablePromise.cancel
     }, [])
 
@@ -125,7 +127,7 @@ export function UserList() {
 
 ## Combine multiple API calls into a single async flow
 
-The utility function `buildCancellablePromise` lets you "capture" every
+The utility function `buildCancellablePromise` lets you `capture` every
 cancellable operation in a multi-step process. In this example, if `bigQuery` is
 canceled, each of the 3 API calls will be canceled (though some might have
 already completed).
@@ -159,6 +161,24 @@ will cancel the `CancellablePromise` automatically.
 
 [CodeSandbox](TODO)
 
+## Handling `Cancellation`
+
+Usually, you'll want to ignore `Cancellation` objects that get thrown:
+
+```ts
+try {
+    await capture(cancellablePromise)
+} catch (e) {
+    if (e instanceof Cancellation) {
+        // do nothing — the component probably just unmounted.
+        // or you could do something here it's up to you 😆
+        return
+    }
+
+    // log the error
+}
+```
+
 ## Handling promises that can't truly be canceled
 
 Sometimes you need to call an asynchronous function that doesn't support
@@ -178,24 +198,6 @@ await cancellablePromise // throws Cancellation object
 
 ```ts
 await CancellablePromise.delay(1000) // wait 1 second
-```
-
-## Handling `Cancellation`
-
-Usually, you'll want to ignore `Cancellation` objects that get thrown:
-
-```ts
-try {
-    await capture(cancellablePromise)
-} catch (e) {
-    if (e instanceof Cancellation) {
-        // do nothing — the component probably unmounted.
-        // or you could do something here it's up to you 😆
-        return
-    }
-
-    // log the error
-}
 ```
 
 ## React: `useCancellablePromiseCleanup`
@@ -237,7 +239,11 @@ export function UserDetail(props: UserDetailProps) {
     const capture = useCancellablePromiseCleanup()
 
     async function saveChanges(): Promise<void> {
-        await capture(updateUser(id, name))
+        try {
+            await capture(updateUser(id, name))
+        } catch {
+            // ...
+        }
     }
 
     return <div>...</div>
@@ -249,7 +255,7 @@ export function UserDetail(props: UserDetailProps) {
 # Supported Platforms
 
 **Browser:** anything that's not Internet Explorer  
-**Node.js:** current release and all LTS releases
+**Node.js:** current release and all maintained LTS releases
 
 # License
 
