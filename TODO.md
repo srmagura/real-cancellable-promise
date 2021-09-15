@@ -1,9 +1,0 @@
--   Usage with HTTP libraries section
--   catch, finally, allSettled, .etc
--   lint-staged
--   TypeDoc
--   Bundle for release
--   Integrate into `iti-react`
--   Use in real projects
--   Create CodeSandboxes
--   (GitHub issue) GitHub actions CI

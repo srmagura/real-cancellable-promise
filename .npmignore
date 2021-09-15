@@ -1,0 +1,11 @@
+dist/__tests__
+docs/
+internal-docs/
+babel.config.js
+lint-staged.config.js
+.eslintrc.js
+.eslintignore
+jest.config.js
+rc-promise.code-workspace
+typedoc.json
+tsconfig.json

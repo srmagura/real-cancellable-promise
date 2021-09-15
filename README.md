@@ -263,4 +263,4 @@ MIT
 
 # Contributing
 
-See `internal-docs/Contributing.md`.
+See `CONTRIBUTING.md`.
