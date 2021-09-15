@@ -1,0 +1,8 @@
+-   Usage with HTTP libraries section
+-   lint-staged
+-   TypeDoc
+-   Bundle for release
+-   Integrate into `iti-react`
+-   Use in real projects
+-   Create CodeSandboxes
+-   (GitHub issue) GitHub actions CI

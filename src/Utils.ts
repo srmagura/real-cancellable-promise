@@ -6,6 +6,9 @@ import { noop } from './Internal'
  * Takes in a regular `Promise` and returns a `CancellablePromise`. If canceled,
  * the `CancellablePromise` will immediately reject with a `Cancellation`, but the asynchronous
  * operation will not truly be aborted.
+ *
+ * Analogous to
+ * [make-cancellable-promise](https://www.npmjs.com/package/make-cancellable-promise).
  */
 export function pseudoCancellable<T>(promise: PromiseLike<T>): CancellablePromise<T> {
     let canceled = false

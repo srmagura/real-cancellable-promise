@@ -18,6 +18,10 @@ describe('pseudoCancellable', () => {
 
         await expect(p).rejects.toThrow(Cancellation)
     })
+
+    test('cancel is a no-op if the promise already resolve', () => {
+        fail()
+    })
 })
 
 describe('buildCancellablePromise', () => {
