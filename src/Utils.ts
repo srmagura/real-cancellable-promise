@@ -20,7 +20,11 @@ export function pseudoCancellable<T>(promise: PromiseLike<T>): CancellablePromis
         // eslint-disable-next-line promise/catch-or-return -- no catch method on PromiseLike
         promise.then(
             (result) => {
-                if (!canceled) resolve(result)
+                if (!canceled) {
+                    resolve(result)
+                    rejectFn = noop
+                }
+
                 return undefined
             },
             (e: unknown) => {

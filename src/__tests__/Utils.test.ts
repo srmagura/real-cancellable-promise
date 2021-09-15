@@ -1,7 +1,7 @@
 import { CancellablePromise } from '../CancellablePromise'
 import { Cancellation } from '../Cancellation'
 import { buildCancellablePromise, pseudoCancellable } from '../Utils'
-import { defaultDuration, delay, getPromise } from './__helpers__'
+import { defaultDuration, delay, getPromise, fail } from './__helpers__'
 
 beforeEach(() => {
     jest.useFakeTimers()
@@ -19,8 +19,12 @@ describe('pseudoCancellable', () => {
         await expect(p).rejects.toThrow(Cancellation)
     })
 
-    test('cancel is a no-op if the promise already resolve', () => {
-        fail()
+    test('cancel is a no-op if the promise has already resolved', async () => {
+        const p = pseudoCancellable(delay(1000))
+        jest.runAllTimers()
+
+        await p
+        p.cancel()
     })
 })
 

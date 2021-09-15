@@ -328,8 +328,8 @@ describe('race', () => {
     })
 
     it('cancels all promises', async () => {
-        const p0 = getPromise(0).then(fail)
-        const p1 = getPromise(1).then(fail)
+        const p0 = getPromise(0).then(() => fail())
+        const p1 = getPromise(1).then(() => fail())
 
         const race = CancellablePromise.race([p0, p1])
         race.cancel()
@@ -401,7 +401,7 @@ describe('allSettled', () => {
     })
 
     it('resolves and cancels all promises when canceled', async () => {
-        const p1 = getPromise(1).then(fail)
+        const p1 = getPromise(1).then(() => fail())
         const p2 = delay(defaultDuration)
         const p3 = getPromise(3, { shouldResolve: false })
 
@@ -439,5 +439,13 @@ describe('delay', () => {
         p.cancel()
 
         await expect(p).rejects.toThrow(Cancellation)
+    })
+
+    test('cancel is a no-op if the promise has already resolved', async () => {
+        const p = CancellablePromise.delay(100)
+        jest.runAllTimers()
+
+        await p
+        p.cancel()
     })
 })
