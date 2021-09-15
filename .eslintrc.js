@@ -1,5 +1,11 @@
 module.exports = {
-    extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier'],
+    extends: [
+        'airbnb-base',
+        'airbnb-typescript/base',
+        'plugin:promise/recommended',
+        'prettier',
+    ],
+    plugins: ['promise'],
     parserOptions: {
         project: './tsconfig.json',
     },

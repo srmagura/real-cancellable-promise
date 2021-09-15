@@ -1,52 +1,11 @@
 // Jest bug: https://github.com/facebook/jest/issues/11876
-
 import { CancellablePromise } from '../CancellablePromise'
 import { Cancellation } from '../Cancellation'
+import { defaultDuration, delay, getPromise } from './__helpers__'
 
 beforeEach(() => {
     jest.useFakeTimers()
 })
-
-function delay(duration: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, duration))
-}
-
-interface Options {
-    shouldResolve: boolean
-    duration: number
-}
-
-const defaultDuration = 100
-
-function getPromise<T>(
-    returnValue: T,
-    options?: Partial<Options>
-): CancellablePromise<T> {
-    const shouldResolve = options?.shouldResolve ?? true
-    const duration = options?.duration ?? defaultDuration
-
-    let timer: NodeJS.Timeout | undefined
-    let rejectFn: (error?: unknown) => void = () => {}
-
-    const promise = new Promise<T>((resolve, reject) => {
-        rejectFn = reject
-
-        timer = setTimeout(() => {
-            if (shouldResolve) {
-                resolve(returnValue)
-            } else {
-                reject(new Error('myError'))
-            }
-        }, duration)
-    })
-
-    function cancel(): void {
-        if (timer) clearTimeout(timer)
-        rejectFn(new Cancellation())
-    }
-
-    return new CancellablePromise(promise, cancel)
-}
 
 describe('then', () => {
     it('rejects when the original promise rejects', async () => {

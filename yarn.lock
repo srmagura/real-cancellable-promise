@@ -2947,6 +2947,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-promise@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "eslint-plugin-promise@npm:5.1.0"
+  peerDependencies:
+    eslint: ^7.0.0
+  checksum: e62947aaea6882951a1a9f5fe3e3c7925b8dcc222338f7979bd1495ba0f0dc701820116b108be1e801f6e5156eb9a928142f29c659fd21a5d65a4be495bb327d
+  languageName: node
+  linkType: hard
+
 "eslint-scope@npm:^5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
@@ -5366,6 +5375,7 @@ fsevents@^2.3.2:
     eslint-config-airbnb-typescript: ^14.0.0
     eslint-config-prettier: ^8.3.0
     eslint-plugin-import: ^2.24.2
+    eslint-plugin-promise: ^5.1.0
     jest: ^27.2.0
     prettier: ^2.4.0
     typescript: ^4.4.3

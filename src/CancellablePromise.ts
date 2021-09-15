@@ -1,6 +1,5 @@
 import { Cancellation } from './Cancellation'
-
-const noop = () => {}
+import { noop } from './Internal'
 
 /**
  * The most abstract thing we can cancel — a thenable with a cancel method.

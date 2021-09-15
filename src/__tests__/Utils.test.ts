@@ -1,83 +1,90 @@
-// describe('pseudoCancellable', () => {
-//     it('resolves', async () => {
-//         expect(await pseudoCancellable(Promise.resolve(1))).toBe(1)
-//     })
+import { CancellablePromise } from '../CancellablePromise'
+import { Cancellation } from '../Cancellation'
+import { buildCancellablePromise, pseudoCancellable } from '../Utils'
+import { defaultDuration, delay, getPromise } from './__helpers__'
 
-//     it('can be canceled', async () => {
-//         const p = pseudoCancellable(new Promise((resolve) => setTimeout(resolve, 1000)))
-//         p.cancel()
+beforeEach(() => {
+    jest.useFakeTimers()
+})
 
-//         await expect(p).rejects.toBeInstanceOf(Cancel)
-//     })
-// })
+describe('pseudoCancellable', () => {
+    it('resolves', async () => {
+        expect(await pseudoCancellable(Promise.resolve(1))).toBe(1)
+    })
 
-// describe('buildCancellablePromise', () => {
-//     it('cancels a single promise', async () => {
-//         //jest.useRealTimers()
+    it('can be canceled', async () => {
+        const p = pseudoCancellable(delay(1000))
+        p.cancel()
 
-//         const overallPromise = buildCancellablePromise(async (capture) => {
-//             await capture(getPromise('1', 100))
+        await expect(p).rejects.toThrow(Cancellation)
+    })
+})
 
-//             await capture(getPromise('2', 400))
-//             fail('Promise 2 resolved when it should have been canceled.')
-//         })
+describe('buildCancellablePromise', () => {
+    it('cancels a single promise', async () => {
+        jest.useRealTimers()
 
-//         // Wait until promise1 resolves
-//         //await CancellablePromiseUtil.delay(200)
-//         jest.advanceTimersByTime(200)
+        const overallPromise = buildCancellablePromise(async (capture) => {
+            await capture(getPromise('1'))
 
-//         // This should cause promise2 to be canceled
-//         overallPromise.cancel()
+            await capture(getPromise('2'))
+            fail('Promise 2 resolved when it should have been canceled.')
+        })
 
-//         jest.runAllTimers()
-//         await expect(overallPromise).rejects.toBeInstanceOf(Cancel)
-//     })
+        // Wait until promise1 resolves
+        await delay(defaultDuration * 1.5)
 
-//     it('cancels multiple promises', async () => {
-//         const overallPromise = buildCancellablePromise(async (capture) => {
-//             const promise1 = capture(getPromise('1', 100))
-//             const promise2 = capture(getPromise('2', 100))
+        // This should cause promise2 to be canceled
+        overallPromise.cancel()
 
-//             try {
-//                 await promise1
-//                 fail('promise1 resolved.')
-//             } catch {
-//                 // do nothing
-//             }
+        await expect(overallPromise).rejects.toThrow(Cancellation)
+    })
 
-//             try {
-//                 await promise2
-//                 fail('promise2 resolved.')
-//             } catch {
-//                 // do nothing
-//             }
-//         })
+    it('cancels multiple promises', async () => {
+        const overallPromise = buildCancellablePromise(async (capture) => {
+            const promise1 = capture(getPromise('1'))
+            const promise2 = capture(getPromise('2'))
 
-//         overallPromise.cancel()
+            try {
+                await promise1
+                fail('promise1 resolved.')
+            } catch {
+                // do nothing
+            }
 
-//         jest.runAllTimers()
-//         expect(await overallPromise).toBeUndefined()
-//     })
+            try {
+                await promise2
+                fail('promise2 resolved.')
+            } catch {
+                // do nothing
+            }
+        })
 
-//     it('rejects when the inner function rejects', async () => {
-//         const error = new Error()
+        overallPromise.cancel()
 
-//         await expect(
-//             buildCancellablePromise(() => Promise.reject(error))
-//         ).rejects.toThrow(error)
-//     })
+        jest.runAllTimers()
+        expect(await overallPromise).toBeUndefined()
+    })
 
-//     test('capture does not handle promise rejections', async () => {
-//         const error = new Error()
+    it('rejects when the inner function rejects', async () => {
+        const error = new Error()
 
-//         function callApi(): CancellablePromise<never> {
-//             return CancellablePromise.reject(error)
-//         }
+        await expect(
+            buildCancellablePromise(() => Promise.reject(error))
+        ).rejects.toThrow(error)
+    })
 
-//         const p = buildCancellablePromise(async (capture) => {
-//             await capture(callApi())
-//         })
+    test('capture does not handle promise rejections', async () => {
+        const error = new Error()
 
-//         await expect(p).rejects.toThrow(error)
-//     })
-// })
+        function callApi(): CancellablePromise<never> {
+            return CancellablePromise.reject(error)
+        }
+
+        const p = buildCancellablePromise(async (capture) => {
+            await capture(callApi())
+        })
+
+        await expect(p).rejects.toThrow(error)
+    })
+})
