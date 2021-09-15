@@ -104,6 +104,16 @@ export class CancellablePromise<T> {
     }
 
     /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onFinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onFinally?: (() => void) | undefined | null): CancellablePromise<T> {
+        return new CancellablePromise(this.promise.finally(onFinally), this.cancel)
+    }
+
+    /**
      * Analogous to `Promise.resolve`.
      *
      * The returned promise should resolve even if it is canceled.
@@ -241,7 +251,10 @@ export class CancellablePromise<T> {
     }
 
     /**
-     * Analogous to `Promise.race`.
+     * Creates a `CancellablePromise` that is resolved or rejected when any of the provided `Promises` are resolved
+     * or rejected.
+     * @param values An array of `Promises`.
+     * @returns A new `CancellablePromise`.
      */
     static race<T>(
         values: readonly T[]

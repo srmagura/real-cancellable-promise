@@ -339,6 +339,54 @@ describe('race', () => {
     })
 })
 
+describe('finally', () => {
+    const cleanup = jest.fn()
+
+    it('resolves', async () => {
+        const p = getPromise(1).finally(cleanup)
+
+        expect(cleanup).not.toHaveBeenCalled()
+        jest.runAllTimers()
+
+        expect(await p).toBe(1)
+        expect(cleanup).toHaveBeenCalled()
+    })
+
+    it('rejects', async () => {
+        const p = getPromise(1, { shouldResolve: false }).finally(cleanup)
+
+        expect(cleanup).not.toHaveBeenCalled()
+        jest.runAllTimers()
+
+        await expect(p).rejects.toThrow()
+        expect(cleanup).toHaveBeenCalled()
+    })
+
+    it('rejects if callback throws', async () => {
+        const p = getPromise(1).finally(() => {
+            throw new Error('cleanupError')
+        })
+
+        jest.runAllTimers()
+        await expect(p).rejects.toThrow('cleanupError')
+    })
+
+    it('still runs the callback if the promise is canceled', async () => {
+        const p = getPromise(1).finally(cleanup)
+        p.cancel()
+
+        await expect(p).rejects.toThrow(Cancellation)
+        expect(cleanup).toHaveBeenCalled()
+    })
+
+    it('cannot modify the resolved value', async () => {
+        const p = getPromise(1).finally(() => 2)
+        jest.runAllTimers()
+
+        expect(await p).toBe(1)
+    })
+})
+
 describe('delay', () => {
     it('delays', async () => {
         let resolved = false
