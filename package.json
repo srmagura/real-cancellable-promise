@@ -2,9 +2,12 @@
     "name": "rc-promise",
     "version": "1.0.0-alpha.0",
     "scripts": {
+        "build": "tsc",
         "test": "jest",
         "lint": "eslint"
     },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "packageManager": "yarn@3.0.2",
     "devDependencies": {
         "@babel/core": "^7.15.5",
