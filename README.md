@@ -43,15 +43,92 @@ How do I convert a normal `Promise` to a `CancellablePromise`?
 
 ## <a name="fetch" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">fetch</a>
 
-TODO
+```ts
+export function cancellableFetch<T>(
+    input: RequestInfo,
+    init: RequestInit = {}
+): CancellablePromise<T> {
+    const controller = new AbortController()
+
+    const promise = fetch(input, {
+        ...init,
+        signal: controller.signal,
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Fetch failed with status code ${response.status}.`)
+            }
+
+            return response.json()
+        })
+        .catch((e) => {
+            if (e.name === 'AbortError') {
+                throw new Cancellation()
+            }
+
+            // rethrow the original error
+            throw e
+        })
+
+    return new CancellablePromise<T>(promise, () => controller.abort())
+}
+
+// Use just like normal fetch:
+const cancellablePromise = cancellableFetch(url, {
+    /* pass options here */
+})
+```
 
 ## <a name="axios" href="https://axios-http.com/">axios</a>
 
-TODO
+```ts
+export function cancellableAxios<T>(config: AxiosRequestConfig): CancellablePromise<T> {
+    const source = axios.CancelToken.source()
+    config = { ...config, cancelToken: source.token }
+
+    const promise = axios(config)
+        .then((response) => response.data)
+        .catch((e) => {
+            if (e instanceof axios.Cancel) {
+                throw new Cancellation()
+            }
+
+            // rethrow the original error
+            throw e
+        })
+
+    return new CancellablePromise<T>(promise, () => source.cancel())
+}
+
+// Use just like normal axios:
+const cancellablePromise = cancellableAxios({ url })
+```
 
 ## <a name="jQuery" href="https://api.jquery.com/category/ajax/">jQuery.ajax</a>
 
-TODO
+```ts
+export function cancellableJQueryAjax<T>(
+    settings: JQuery.AjaxSettings
+): CancellablePromise<T> {
+    const xhr = $.ajax(settings)
+
+    const promise = xhr.catch((e) => {
+        const thrownXhr = e as JQuery.jqXHR
+
+        if (thrownXhr.statusText === 'abort') throw new Cancellation()
+
+        // rethrow the original error
+        throw e
+    })
+
+    return new CancellablePromise<T>(promise, () => xhr.abort())
+}
+
+// Use just like normal $.ajax:
+const cancellablePromise = cancellableJQueryAjax({ url, dataType: 'json' })
+```
+
+[HTTP libraries CodeSandbox](https://codesandbox.io/s/real-cancellable-promise-http-libraries-olibp?file=/src/App.tsx)
 
 # [API Reference](https://srmagura.github.io/real-cancellable-promise)
 
@@ -174,7 +251,7 @@ try {
         return
     }
 
-    // log the error
+    // log the error or display it to the user
 }
 ```
 
@@ -210,7 +287,7 @@ export function useCancellablePromiseCleanup(): CaptureCancellablePromise {
     const cancellablePromisesRef = useRef<CancellablePromise<unknown>[]>([])
 
     useEffect(
-        () => (): void => {
+        () => () => {
             for (const promise of cancellablePromisesRef.current) {
                 promise.cancel()
             }
@@ -255,7 +332,7 @@ export function UserDetail(props: UserDetailProps) {
 
 **Browser:** anything that's not Internet Explorer  
 **React Native / Expo:** should work in any recent release  
-**Node.js:** current release and active LTS releases
+**Node.js:** current release and active LTS releases. Note that `AbortController` is only available in Node 15+.
 
 # License
 
