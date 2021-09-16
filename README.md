@@ -330,8 +330,8 @@ export function UserDetail(props: UserDetailProps) {
 
 # Supported Platforms
 
-**Browser:** anything that's not Internet Explorer  
-**React Native / Expo:** should work in any recent release  
+**Browser:** anything that's not Internet Explorer.
+**React Native / Expo:** should work in any recent release. `AbortController` has been available since 0.60.
 **Node.js:** current release and active LTS releases. Note that `AbortController` is only available in Node 15+.
 
 # License
