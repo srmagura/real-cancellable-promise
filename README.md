@@ -224,7 +224,7 @@ canceled, each of the 3 API calls will be canceled (though some might have
 already completed).
 
 ```ts
-async function bigQuery(userId: number): CancellablePromise<QueryResult> {
+function bigQuery(userId: number): CancellablePromise<QueryResult> {
     return buildCancellablePromise(async (capture) => {
         const userPromise = api.user.get(userId)
         const rolePromise = api.user.listRoles(userId)
@@ -291,7 +291,7 @@ await CancellablePromise.delay(1000) // wait 1 second
 ## React: `useCancellablePromiseCleanup`
 
 Here's a React hook that facilitates cancellation of `CancellablePromise`s that
-occur outside of `useEffect`. Any pending API calls will be canceled when the
+occur outside of `useEffect`. Any captured API calls will be canceled when the
 component unmounts. (Just be sure this is what you want to happen.)
 
 ```ts
@@ -343,10 +343,9 @@ useCancellablePromiseCleanup](https://codesandbox.io/s/real-cancellable-promise-
 
 # Supported Platforms
 
-**Browser:** anything that's not Internet Explorer. **React Native / Expo:**
-should work in any recent release. `AbortController` has been available since
-0.60. **Node.js:** current release and active LTS releases. Note that
-`AbortController` is only available in Node 15+.
+**Browser:** anything that's not Internet Explorer.  
+**React Native / Expo:** should work in any recent release. `AbortController` has been available since0.60.
+**Node.js:** current release and active LTS releases. Note that `AbortController` is only available in Node 15+.
 
 # License
 
