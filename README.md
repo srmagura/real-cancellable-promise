@@ -1,5 +1,3 @@
-# WORK IN PROGRESS
-
 # real-cancellable-promise
 
 A simple cancellable promise implementation for JavaScript and TypeScript.
