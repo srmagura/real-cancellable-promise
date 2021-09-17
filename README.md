@@ -5,15 +5,14 @@
 A simple cancellable promise implementation for JavaScript and TypeScript.
 Unlike [p-cancelable](https://www.npmjs.com/package/p-cancelable) and
 [make-cancellable-promise](https://www.npmjs.com/package/make-cancellable-promise)
-which only prevent your promise's callbacks from executing, **`real-cancellable-promise`
-cancels the underlying asynchronous operation (usually an HTTP call).** That's
-why it's called **Real** Cancellable Promise.
+which only prevent your promise's callbacks from executing,
+**`real-cancellable-promise` cancels the underlying asynchronous operation
+(usually an HTTP call).** That's why it's called **Real** Cancellable Promise.
 
 -   ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
     [jQuery.ajax](#jQuery)
 -   ⚛ Built with React in mind — no more "setState after unmount" errors!
--   🐦 Lightweight — zero dependencies and less than 1 kB
-    minified and gzipped
+-   🐦 Lightweight — zero dependencies and less than 1 kB minified and gzipped
 -   🏭 Used in production by [Interface
     Technologies](http://www.iticentral.com/)
 -   💻 Optimized for TypeScript
@@ -55,11 +54,16 @@ export function cancellableFetch<T>(
         signal: controller.signal,
     })
         .then((response) => {
+            // Handle the response object however you want
             if (!response.ok) {
                 throw new Error(`Fetch failed with status code ${response.status}.`)
             }
 
-            return response.json()
+            if (response.headers.get('content-type')?.includes('application/json')) {
+                return response.json()
+            } else {
+                return response.text()
+            }
         })
         .catch((e) => {
             if (e.name === 'AbortError') {
@@ -128,13 +132,14 @@ export function cancellableJQueryAjax<T>(
 const cancellablePromise = cancellableJQueryAjax({ url, dataType: 'json' })
 ```
 
-[HTTP libraries CodeSandbox](https://codesandbox.io/s/real-cancellable-promise-http-libraries-olibp?file=/src/App.tsx)
+[CodeSandbox: HTTP
+libraries](https://codesandbox.io/s/real-cancellable-promise-http-libraries-olibp?file=/src/App.tsx)
 
 # [API Reference](https://srmagura.github.io/real-cancellable-promise)
 
 `CancellablePromise` supports all the methods that the normal `Promise` object
-supports, with the exception of `Promise.any` (ES2021). See the [API Reference](https://srmagura.github.io/real-cancellable-promise) for
-details.
+supports, with the exception of `Promise.any` (ES2021). See the [API
+Reference](https://srmagura.github.io/real-cancellable-promise) for details.
 
 # Examples
 
@@ -146,7 +151,7 @@ unmounted before the API call completes.
 
 You can fix this by canceling the API call in the cleanup function of an effect.
 
-```ts
+```tsx
 function listBlogPosts(): CancellablePromise<Post[]> {
     // call the API
 }
@@ -161,17 +166,24 @@ export function Blog() {
         return cancellablePromise.cancel
     }, [])
 
-    return <div>{posts.map(p => /* ... */)}</div>
+    return (
+        <div>
+            {posts.map((p) => {
+                /* ... */
+            })}
+        </div>
+    )
 }
 ```
 
-[CodeSandbox](TODO)
+[CodeSandbox: prevent setState after
+unmount](https://codesandbox.io/s/real-cancellable-promise-prevent-setstate-after-unmount-2zqb0?file=/src/App.tsx)
 
 ## React: Cancel the in-progress API call when query parameters change
 
 Sometimes API calls have parameters, like a search string entered by the user.
 
-```ts
+```tsx
 function searchUsers(searchTerm: string): CancellablePromise<User[]> {
     // call the API
 }
@@ -182,7 +194,9 @@ export function UserList() {
 
     // In a real app you should debounce the searchTerm
     useEffect(() => {
-        const cancellablePromise = searchUsers(searchTerm).then(setUsers).catch(console.error)
+        const cancellablePromise = searchUsers(searchTerm)
+            .then(setUsers)
+            .catch(console.error)
 
         // The old API call gets canceled whenever searchTerm changes. This prevents
         // setUsers from being called with incorrect results if the API calls complete
@@ -193,13 +207,16 @@ export function UserList() {
     return (
         <div>
             <SearchInput searchTerm={searchTerm} onChange={setSearchTerm} />
-            {users.map(p => /* ... */)}
+            {users.map((u) => {
+                /* ... */
+            })}
         </div>
     )
 }
 ```
 
-[CodeSandbox](TODO)
+[CodeSandbox: cancel the in-progress API call when query parameters
+change](https://codesandbox.io/s/real-cancellable-promise-changing-query-parameters-g6j4r)
 
 ## Combine multiple API calls into a single async flow
 
@@ -231,11 +248,8 @@ async function bigQuery(userId: number): CancellablePromise<QueryResult> {
 If your query key changes and there's an API call in progress, `react-query`
 will cancel the `CancellablePromise` automatically.
 
-```ts
-
-```
-
-[CodeSandbox](TODO)
+[CodeSandbox: react-query
+integration](https://codesandbox.io/s/real-cancellable-promise-react-query-4sxf6?file=/src/App.tsx)
 
 ## Handling `Cancellation`
 
@@ -306,7 +320,7 @@ export function useCancellablePromiseCleanup(): CaptureCancellablePromise {
 
 Then in your React components...
 
-```ts
+```tsx
 function updateUser(id: number, name: string): CancellablePromise<void> {
     // call the API
 }
@@ -326,13 +340,15 @@ export function UserDetail(props: UserDetailProps) {
 }
 ```
 
-[CodeSandbox](TODO)
+[CodeSandbox:
+useCancellablePromiseCleanup](https://codesandbox.io/s/real-cancellable-promise-usecancellablepromisecleanup-0jozc?file=/src/App.tsx)
 
 # Supported Platforms
 
-**Browser:** anything that's not Internet Explorer.
-**React Native / Expo:** should work in any recent release. `AbortController` has been available since 0.60.
-**Node.js:** current release and active LTS releases. Note that `AbortController` is only available in Node 15+.
+**Browser:** anything that's not Internet Explorer. **React Native / Expo:**
+should work in any recent release. `AbortController` has been available since
+0.60. **Node.js:** current release and active LTS releases. Note that
+`AbortController` is only available in Node 15+.
 
 # License
 
