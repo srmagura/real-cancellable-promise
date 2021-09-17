@@ -343,8 +343,10 @@ useCancellablePromiseCleanup](https://codesandbox.io/s/real-cancellable-promise-
 
 # Supported Platforms
 
-**Browser:** anything that's not Internet Explorer.  
-**React Native / Expo:** should work in any recent release. `AbortController` has been available since0.60.
+**Browser:** anything that's not Internet Explorer.
+
+**React Native / Expo:** should work in any recent release. `AbortController` has been available since 0.60.
+
 **Node.js:** current release and active LTS releases. Note that `AbortController` is only available in Node 15+.
 
 # License
