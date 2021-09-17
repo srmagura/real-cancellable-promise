@@ -9,6 +9,17 @@ beforeEach(() => {
     jest.useFakeTimers()
 })
 
+describe('constructor', () => {
+    it('supports canceling with a reason', async () => {
+        const p = getPromise(0, { cancellationReason: 'myReason' })
+        p.cancel()
+
+        jest.runAllTimers()
+
+        await expect(p).rejects.toThrow(new Cancellation('myReason'))
+    })
+})
+
 describe('then', () => {
     it('rejects when the original promise rejects', async () => {
         const p = getPromise(5, { shouldResolve: false }).then((n) => n * 2)

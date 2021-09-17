@@ -12,6 +12,7 @@ export function delay(duration: number): Promise<void> {
 interface Options {
     shouldResolve: boolean
     duration: number
+    cancellationReason: string
 }
 
 export const defaultDuration = 100
@@ -22,6 +23,7 @@ export function getPromise<T>(
 ): CancellablePromise<T> {
     const shouldResolve = options?.shouldResolve ?? true
     const duration = options?.duration ?? defaultDuration
+    const cancellationReason = options?.cancellationReason
 
     let timer: NodeJS.Timeout | undefined
     let rejectFn: (error?: unknown) => void = () => {}
@@ -40,7 +42,7 @@ export function getPromise<T>(
 
     function cancel(): void {
         if (timer) clearTimeout(timer)
-        rejectFn(new Cancellation())
+        rejectFn(new Cancellation(cancellationReason))
     }
 
     return new CancellablePromise(promise, cancel)

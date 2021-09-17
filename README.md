@@ -282,6 +282,12 @@ cancellablePromise.cancel()
 await cancellablePromise // throws Cancellation object if promise did not already resolve
 ```
 
+This will **NOT** work, your callbacks with still run:
+
+```ts
+const cancellablePromise = new CancellablePromise(normalPromise, () => {})
+```
+
 ## `CancellablePromise.delay`
 
 ```ts
@@ -347,7 +353,7 @@ useCancellablePromiseCleanup](https://codesandbox.io/s/real-cancellable-promise-
 
 **React Native / Expo:** should work in any recent release. `AbortController` has been available since 0.60.
 
-**Node.js:** current release and active LTS releases. Note that `AbortController` is only available in Node 15+.
+**Node.js:** 14+. `AbortController` is only available in Node 15+.
 
 # License
 

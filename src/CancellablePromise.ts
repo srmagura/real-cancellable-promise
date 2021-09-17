@@ -6,7 +6,10 @@ import { noop } from './Internal'
  */
 export type PromiseWithCancel<T> = PromiseLike<T> & { cancel(): void }
 
-function isPromiseWithCancel<T>(value: unknown): value is PromiseWithCancel<T> {
+/**
+ * Determines if an arbitrary value is a thenable with a cancel method.
+ */
+export function isPromiseWithCancel<T>(value: unknown): value is PromiseWithCancel<T> {
     return (
         typeof value === 'object' &&
         typeof (value as any).then === 'function' &&
@@ -21,7 +24,7 @@ function isPromiseWithCancel<T>(value: unknown): value is PromiseWithCancel<T> {
  * object.
  */
 export class CancellablePromise<T> {
-    readonly promise: Promise<T>
+    protected readonly promise: Promise<T>
 
     readonly cancel: (reason?: string) => void
 
