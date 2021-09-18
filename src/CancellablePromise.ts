@@ -26,6 +26,8 @@ export function isPromiseWithCancel<T>(value: unknown): value is PromiseWithCanc
 export class CancellablePromise<T> {
     protected readonly promise: Promise<T>
 
+    // IMPORTANT: When defining a new `cancel` function, e.g. in the implementation of `then`,
+    // always use an arrow function so that `this` is bound.
     readonly cancel: (reason?: string) => void
 
     /**
