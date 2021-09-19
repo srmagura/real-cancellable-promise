@@ -1,3 +1,3 @@
-export * from './Cancellation.js'
-export * from './CancellablePromise.js'
-export * from './Utils.js'
+export * from './Cancellation'
+export * from './CancellablePromise'
+export * from './Utils'

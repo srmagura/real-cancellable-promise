@@ -11,7 +11,9 @@ module.exports = {
     },
     rules: {
         'import/prefer-default-export': 'off',
-        'import/extensions': ['error', 'ignorePackages'],
+
+        // add back if we switch to publishing ES modules.
+        // 'import/extensions': ['error', 'always'],
 
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'no-restricted-syntax': [

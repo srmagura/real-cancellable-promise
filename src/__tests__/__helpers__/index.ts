@@ -1,5 +1,5 @@
-import { CancellablePromise } from '../../CancellablePromise.js'
-import { Cancellation } from '../../Cancellation.js'
+import { CancellablePromise } from '../../CancellablePromise'
+import { Cancellation } from '../../Cancellation'
 
 export function fail(reason: string = 'fail was called in a test.'): never {
     throw new Error(reason)
