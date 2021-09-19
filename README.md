@@ -115,9 +115,7 @@ export function cancellableJQueryAjax<T>(
     const xhr = $.ajax(settings)
 
     const promise = xhr.catch((e) => {
-        const thrownXhr = e as JQuery.jqXHR
-
-        if (thrownXhr.statusText === 'abort') throw new Cancellation()
+        if (e.statusText === 'abort') throw new Cancellation()
 
         // rethrow the original error
         throw e
