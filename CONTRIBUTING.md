@@ -7,7 +7,7 @@ Contributions are welcome.
 1. `yarn install`
 2. Check for type errors: `yarn tsc`
 3. Run tests: `yarn test`
-4. Run ESLint: `yarn lint '**/*.ts?(x)'`
+4. Run ESLint: `yarn lint-all`
 
 ## TypeDoc
 
