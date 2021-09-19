@@ -11,6 +11,7 @@ module.exports = {
     },
     rules: {
         'import/prefer-default-export': 'off',
+        'import/extensions': ['error', 'ignorePackages'],
 
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'no-restricted-syntax': [

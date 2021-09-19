@@ -1,6 +1,6 @@
-import { CancellablePromise } from './CancellablePromise'
-import { Cancellation } from './Cancellation'
-import { noop } from './Internal'
+import { CancellablePromise } from './CancellablePromise.js'
+import { Cancellation } from './Cancellation.js'
+import { noop } from './Internal.js'
 
 /**
  * Takes in a regular `Promise` and returns a `CancellablePromise`. If canceled,

@@ -1,8 +1,8 @@
 // Jest bug: https://github.com/facebook/jest/issues/11876
 // Jest bug 2: https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/55803
-import { CancellablePromise } from '../CancellablePromise'
-import { Cancellation } from '../Cancellation'
-import { defaultDuration, delay, getPromise, fail } from './__helpers__'
+import { CancellablePromise } from '../CancellablePromise.js'
+import { Cancellation } from '../Cancellation.js'
+import { defaultDuration, delay, getPromise, fail } from './__helpers__/index.js'
 
 beforeEach(() => {
     jest.resetAllMocks()

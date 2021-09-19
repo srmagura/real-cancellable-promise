@@ -1,5 +1,5 @@
-import { Cancellation } from './Cancellation'
-import { noop } from './Internal'
+import { Cancellation } from './Cancellation.js'
+import { noop } from './Internal.js'
 
 /**
  * The most abstract thing we can cancel — a thenable with a cancel method.

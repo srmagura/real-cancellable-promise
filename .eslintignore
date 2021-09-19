@@ -1,4 +1,5 @@
-.eslintrc.js
-.prettierrc.js
-babel.config.js
+.eslintrc.cjs
+.prettierrc.cjs
+babel.config.cjs
+jest.config.js
 dist/

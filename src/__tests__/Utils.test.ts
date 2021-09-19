@@ -1,7 +1,7 @@
-import { CancellablePromise } from '../CancellablePromise'
-import { Cancellation } from '../Cancellation'
-import { buildCancellablePromise, pseudoCancellable } from '../Utils'
-import { defaultDuration, delay, getPromise, fail } from './__helpers__'
+import { CancellablePromise } from '../CancellablePromise.js'
+import { Cancellation } from '../Cancellation.js'
+import { buildCancellablePromise, pseudoCancellable } from '../Utils.js'
+import { defaultDuration, delay, getPromise, fail } from './__helpers__/index.js'
 
 beforeEach(() => {
     jest.useFakeTimers()
