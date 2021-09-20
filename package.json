@@ -4,7 +4,8 @@
     "description": "A simple cancellable promise implementation that cancels the underlying HTTP call.",
     "keywords": [
         "promise",
-        "cancellable-promise",
+        "cancelable",
+        "cancellable",
         "react"
     ],
     "homepage": "https://github.com/srmagura/real-cancellable-promise",
