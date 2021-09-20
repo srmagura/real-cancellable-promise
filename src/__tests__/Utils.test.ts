@@ -1,6 +1,6 @@
 import { CancellablePromise } from '../CancellablePromise'
 import { Cancellation } from '../Cancellation'
-import { buildCancellablePromise, pseudoCancellable } from '../Utils'
+import { buildCancellablePromise, pseudoCancellable } from '../utils'
 import { defaultDuration, delay, getPromise, fail } from './__helpers__'
 
 beforeEach(() => {

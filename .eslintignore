@@ -1,5 +1,5 @@
 .eslintrc.cjs
 .prettierrc.cjs
 babel.config.cjs
-jest.config.js
+jest.config.cjs
 dist/

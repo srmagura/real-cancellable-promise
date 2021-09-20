@@ -134,7 +134,7 @@ libraries](https://codesandbox.io/s/real-cancellable-promise-http-libraries-olib
 # [API Reference](https://srmagura.github.io/real-cancellable-promise)
 
 `CancellablePromise` supports all the methods that the normal `Promise` object
-supports, with the exception of `Promise.any` (ES2021). See the [API
+supports, except `Promise.any` (ES2021). See the [API
 Reference](https://srmagura.github.io/real-cancellable-promise) for details.
 
 # Examples

@@ -1,6 +1,6 @@
 import { CancellablePromise } from './CancellablePromise'
 import { Cancellation } from './Cancellation'
-import { noop } from './Internal'
+import { noop } from './noop'
 
 /**
  * Takes in a regular `Promise` and returns a `CancellablePromise`. If canceled,
@@ -42,7 +42,7 @@ export function pseudoCancellable<T>(promise: PromiseLike<T>): CancellablePromis
 }
 
 /**
- * The typeof the `capture` function used in [[`buildCancellablePromise`]].
+ * The type of the `capture` function used in [[`buildCancellablePromise`]].
  */
 export type CaptureCancellablePromise = <T>(
     promise: CancellablePromise<T>

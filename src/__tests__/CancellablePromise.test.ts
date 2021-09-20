@@ -5,7 +5,6 @@ import { Cancellation } from '../Cancellation'
 import { defaultDuration, delay, getPromise, fail } from './__helpers__'
 
 beforeEach(() => {
-    jest.resetAllMocks()
     jest.useFakeTimers()
 })
 
@@ -230,7 +229,7 @@ describe('all', () => {
         /* eslint-disable @typescript-eslint/no-unused-vars */
         const y: 0[] = await CancellablePromise.all(range(20).map(() => p0))
 
-        const x0: [0] = await CancellablePromise.all([p0])
+        const x0: 0[] = await CancellablePromise.all([p0])
         const x2: [0, 1, 2] = await CancellablePromise.all([p0, p1, p2])
         const x3: [0, 1, 2, 3] = await CancellablePromise.all([p0, p1, p2, p3])
         const x4: [0, 1, 2, 3, 4] = await CancellablePromise.all([p0, p1, p2, p3, p4])
@@ -285,6 +284,18 @@ describe('all', () => {
             p9,
         ])
         /* eslint-enable @typescript-eslint/no-unused-vars */
+    })
+
+    it('supports normal promises, thenables, and non-promises', async () => {
+        const [r0, r1, r2] = await CancellablePromise.all([
+            Promise.resolve(0),
+            Promise.resolve(1) as PromiseLike<number>,
+            2,
+        ])
+
+        expect(r0).toBe(0)
+        expect(r1).toBe(1)
+        expect(r2).toBe(2)
     })
 
     it('returns the results of the input promises', async () => {
