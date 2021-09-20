@@ -1,6 +1,6 @@
 {
     "name": "real-cancellable-promise",
-    "version": "1.0.0-alpha.6",
+    "version": "1.0.0",
     "description": "A simple cancellable promise implementation that cancels the underlying HTTP call.",
     "keywords": [
         "promise",
