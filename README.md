@@ -41,6 +41,36 @@ How do I convert a normal `Promise` to a `CancellablePromise`?
 ## <a name="fetch" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">fetch</a>
 
 ```ts
+export function cancellableFetch(
+    input: RequestInfo,
+    init: RequestInit = {}
+): CancellablePromise<Response> {
+    const controller = new AbortController()
+
+    const promise = fetch(input, {
+        ...init,
+        signal: controller.signal,
+    }).catch((e) => {
+        if (e.name === 'AbortError') {
+            throw new Cancellation()
+        }
+
+        // rethrow the original error
+        throw e
+    })
+
+    return new CancellablePromise<Response>(promise, () => controller.abort())
+}
+
+// Use just like normal fetch:
+const cancellablePromise = cancellableFetch(url, {
+    /* pass options here */
+})
+```
+
+<details>
+    <summary>`fetch` with response handling</summary>
+```ts
 export function cancellableFetch<T>(
     input: RequestInfo,
     init: RequestInit = {}
@@ -73,13 +103,11 @@ export function cancellableFetch<T>(
         })
 
     return new CancellablePromise<T>(promise, () => controller.abort())
+
 }
 
-// Use just like normal fetch:
-const cancellablePromise = cancellableFetch(url, {
-    /* pass options here */
-})
-```
+````
+</details>
 
 ## <a name="axios" href="https://axios-http.com/">axios</a>
 
@@ -104,7 +132,7 @@ export function cancellableAxios<T>(config: AxiosRequestConfig): CancellableProm
 
 // Use just like normal axios:
 const cancellablePromise = cancellableAxios({ url })
-```
+````
 
 ## <a name="jQuery" href="https://api.jquery.com/category/ajax/">jQuery.ajax</a>
 
