@@ -69,8 +69,8 @@ const cancellablePromise = cancellableFetch(url, {
 ```
 
 <details>
-    <summary>`fetch` with response handling</summary>
-    
+    <summary><code>fetch</code> with response handling</summary>
+
 ```ts
 export function cancellableFetch<T>(
     input: RequestInfo,
@@ -104,10 +104,9 @@ export function cancellableFetch<T>(
         })
 
     return new CancellablePromise<T>(promise, () => controller.abort())
-
 }
+```
 
-````
 </details>
 
 ## <a name="axios" href="https://axios-http.com/">axios</a>
@@ -133,7 +132,7 @@ export function cancellableAxios<T>(config: AxiosRequestConfig): CancellableProm
 
 // Use just like normal axios:
 const cancellablePromise = cancellableAxios({ url })
-````
+```
 
 ## <a name="jQuery" href="https://api.jquery.com/category/ajax/">jQuery.ajax</a>
 
