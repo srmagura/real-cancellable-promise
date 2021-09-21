@@ -7,9 +7,9 @@ which only prevent your promise's callbacks from executing,
 **`real-cancellable-promise` cancels the underlying asynchronous operation
 (usually an HTTP call).** That's why it's called **Real** Cancellable Promise.
 
+-   ⚛ Built with React in mind — no more "setState after unmount" errors!
 -   ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
     [jQuery.ajax](#jQuery)
--   ⚛ Built with React in mind — no more "setState after unmount" errors!
 -   🐦 Lightweight — zero dependencies and less than 1 kB minified and gzipped
 -   🏭 Used in production by [Interface
     Technologies](http://www.iticentral.com/)
@@ -70,6 +70,7 @@ const cancellablePromise = cancellableFetch(url, {
 
 <details>
     <summary>`fetch` with response handling</summary>
+    
 ```ts
 export function cancellableFetch<T>(
     input: RequestInfo,
