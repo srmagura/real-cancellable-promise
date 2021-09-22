@@ -1,7 +1,8 @@
 # real-cancellable-promise
 
 A simple cancellable promise implementation for JavaScript and TypeScript.
-[Read the announcement post for a full explanation.](TODO) In particular, see the ["Prior art" section](TODO) for a comparison to existing cancellable promise libraries.
+
+[Read the announcement post for a full explanation.](https://dev.to/srmagura/announcing-real-cancellable-promise-gkd) In particular, see the "Prior art" section for a comparison to existing cancellable promise libraries.
 
 -   ⚛ Built with React in mind — no more "setState after unmount" warnings!
 -   ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
@@ -28,6 +29,15 @@ const cancellablePromise = new CancellablePromise(normalPromise, cancel)
 cancellablePromise.cancel()
 
 await cancellablePromise // throws a Cancellation object that subclasses Error
+```
+
+**IMPORTANT:** The `CancellablePromise` constructor takes in a `promise` and a `cancel` function.
+Your `cancel` function **MUST** cause `promise` to reject with a `Cancellation` object.
+
+This will **NOT** work, your callbacks with still run:
+
+```ts
+new CancellablePromise(normalPromise, () => {})
 ```
 
 # Usage with HTTP Libraries
@@ -292,8 +302,7 @@ try {
 ## Handling promises that can't truly be canceled
 
 Sometimes you need to call an asynchronous function that doesn't support
-cancellation. In this case, you can use `pseudoCancellable` to prevent the
-promise from resolving after `cancel` has been called.
+cancellation. In this case, you can use `pseudoCancellable`:
 
 ```ts
 const cancellablePromise = pseudoCancellable(normalPromise)
@@ -302,12 +311,6 @@ const cancellablePromise = pseudoCancellable(normalPromise)
 cancellablePromise.cancel()
 
 await cancellablePromise // throws Cancellation object if promise did not already resolve
-```
-
-This will **NOT** work, your callbacks with still run:
-
-```ts
-const cancellablePromise = new CancellablePromise(normalPromise, () => {})
 ```
 
 ## `CancellablePromise.delay`
