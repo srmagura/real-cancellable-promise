@@ -31,7 +31,9 @@ cancellablePromise.cancel()
 await cancellablePromise // throws a Cancellation object that subclasses Error
 ```
 
-**IMPORTANT:** The `CancellablePromise` constructor takes in a `promise` and a `cancel` function.
+### Important
+
+The `CancellablePromise` constructor takes in a `promise` and a `cancel` function.
 Your `cancel` function **MUST** cause `promise` to reject with a `Cancellation` object.
 
 This will **NOT** work, your callbacks with still run:

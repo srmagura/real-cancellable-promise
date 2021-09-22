@@ -24,7 +24,11 @@ query cancellation out of the box</li>
 </code></pre>
 <pre><code class="language-ts"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-3">CancellablePromise</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-8">&#39;real-cancellable-promise&#39;</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-6">cancellablePromise</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-2">CancellablePromise</span><span class="hl-1">(</span><span class="hl-3">normalPromise</span><span class="hl-1">, </span><span class="hl-3">cancel</span><span class="hl-1">)</span><br/><br/><span class="hl-3">cancellablePromise</span><span class="hl-1">.</span><span class="hl-2">cancel</span><span class="hl-1">()</span><br/><br/><span class="hl-5">await</span><span class="hl-1"> </span><span class="hl-3">cancellablePromise</span><span class="hl-1"> </span><span class="hl-7">// throws a Cancellation object that subclasses Error</span>
 </code></pre>
-<p><strong>IMPORTANT:</strong> The <code>CancellablePromise</code> constructor takes in a <code>promise</code> and a <code>cancel</code> function.
+
+<a href="#important" id="important" style="color: inherit; text-decoration: none;">
+  <h3>Important</h3>
+</a>
+<p>The <code>CancellablePromise</code> constructor takes in a <code>promise</code> and a <code>cancel</code> function.
 Your <code>cancel</code> function <strong>MUST</strong> cause <code>promise</code> to reject with a <code>Cancellation</code> object.</p>
 <p>This will <strong>NOT</strong> work, your callbacks with still run:</p>
 <pre><code class="language-ts"><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-2">CancellablePromise</span><span class="hl-1">(</span><span class="hl-3">normalPromise</span><span class="hl-1">, () </span><span class="hl-0">=&gt;</span><span class="hl-1"> {})</span>
