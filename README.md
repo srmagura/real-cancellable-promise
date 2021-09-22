@@ -1,13 +1,9 @@
 # real-cancellable-promise
 
 A simple cancellable promise implementation for JavaScript and TypeScript.
-Unlike [p-cancelable](https://www.npmjs.com/package/p-cancelable) and
-[make-cancellable-promise](https://www.npmjs.com/package/make-cancellable-promise)
-which only prevent your promise's callbacks from executing,
-**`real-cancellable-promise` cancels the underlying asynchronous operation
-(usually an HTTP call).** That's why it's called **Real** Cancellable Promise.
+[Read the announcement post for a full explanation.](TODO) In particular, see the ["Prior art" section](TODO) for a comparison to existing cancellable promise libraries.
 
--   ⚛ Built with React in mind — no more "setState after unmount" errors!
+-   ⚛ Built with React in mind — no more "setState after unmount" warnings!
 -   ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
     [jQuery.ajax](#jQuery)
 -   🐦 Lightweight — zero dependencies and less than 1 kB minified and gzipped
@@ -159,11 +155,11 @@ const cancellablePromise = cancellableJQueryAjax({ url, dataType: 'json' })
 [CodeSandbox: HTTP
 libraries](https://codesandbox.io/s/real-cancellable-promise-http-libraries-olibp?file=/src/App.tsx)
 
-# [API Reference](https://srmagura.github.io/real-cancellable-promise)
+# [API Reference](https://srmagura.github.io/real-cancellable-promise/modules.html)
 
 `CancellablePromise` supports all the methods that the normal `Promise` object
 supports, except `Promise.any` (ES2021). See the [API
-Reference](https://srmagura.github.io/real-cancellable-promise) for details.
+Reference](https://srmagura.github.io/real-cancellable-promise/modules.html) for details.
 
 # Examples
 
