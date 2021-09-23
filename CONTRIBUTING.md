@@ -9,13 +9,13 @@ Contributions are welcome.
 3. Run tests: `yarn test`
 4. Run ESLint: `yarn lint-all`
 
-# Publishing
+## Publishing
 
 1. Increment version in `package.json`.
-2. (If production release) add a tag in the format `v1.0.0`.
-3. `yarn npm publish`
-
-TODO: Publish workflow
+2. (If production release) Add a git tag in the format `v1.0.0`.
+3. Commit and push.
+4. `yarn npm publish` or `yarn npm publish --tag next`. The `prepublish` script will automatically do a clean and build.
+5. (If production release) Create a new release in GitHub.
 
 ## TypeDoc
 
