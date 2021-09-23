@@ -11,11 +11,12 @@ Contributions are welcome.
 
 ## Publishing
 
-1. Increment version in `package.json`.
-2. (If production release) Add a git tag in the format `v1.0.0`.
-3. Commit and push.
-4. `yarn npm publish` or `yarn npm publish --tag next`. The `prepublish` script will automatically do a clean and build.
-5. (If production release) Create a new release in GitHub.
+1. Make sure that the CI workflow succeeded.
+2. Increment version in `package.json`.
+3. (If production release) Add a git tag in the format `v1.0.0`.
+4. Commit and push. Remember to push tags as well with `git push --tags`.
+5. `yarn npm publish` or `yarn npm publish --tag next`. The `prepublish` script will automatically do a clean and build.
+6. (If production release) Create a new release in GitHub.
 
 ## TypeDoc
 
