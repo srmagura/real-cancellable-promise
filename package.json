@@ -24,7 +24,17 @@
         "lint": "eslint",
         "lint-all": "yarn lint '**/*.ts?(x)'",
         "prettier-all": "prettier '**/*.ts?(x)'",
-        "prepublish": "yarn build"
+        "prepublish": "yarn build && pinst --disable",
+        "postpublish": "pinst --enable",
+        "postinstall": "husky install",
+        "lint-staged": "lint-staged --no-stash"
+    },
+    "lint-staged": {
+        "*.ts?(x)": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.{md,cjs}": "prettier --write"
     },
     "devDependencies": {
         "@babel/core": "^7.15.5",
@@ -40,7 +50,10 @@
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.24.2",
         "eslint-plugin-promise": "^5.1.0",
+        "husky": "^7.0.2",
         "jest": "^27.2.0",
+        "lint-staged": "^11.1.2",
+        "pinst": "^2.1.6",
         "prettier": "^2.4.0",
         "rimraf": "^3.0.2",
         "typedoc": "^0.22.3",
