@@ -34,7 +34,7 @@
             "eslint --fix",
             "prettier --write"
         ],
-        "*.{md,cjs,yml,json}": "prettier --write"
+        "*.{md,js,cjs,yml,json}": "prettier --write"
     },
     "devDependencies": {
         "@babel/core": "^7.15.5",

@@ -9,6 +9,14 @@ Contributions are welcome.
 3. Run tests: `yarn test`
 4. Run ESLint: `yarn lint-all`
 
+# Publishing
+
+1. Increment version in `package.json`.
+2. (If production release) add a tag in the format `v1.0.0`.
+3. `yarn npm publish`
+
+TODO: Publish workflow
+
 ## TypeDoc
 
 You can build the API documentation by running `yarn typedoc`.
