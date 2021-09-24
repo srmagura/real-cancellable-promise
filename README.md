@@ -380,7 +380,7 @@ useCancellablePromiseCleanup](https://codesandbox.io/s/real-cancellable-promise-
 
 **React Native / Expo:** should work in any recent release. `AbortController` has been available since 0.60.
 
-**Node.js:** 14+. `AbortController` is only available in Node 15+.
+**Node.js:** 14+. `AbortController` is only available in Node 15+. Both `require()` (CommonJS) and `import` (ES modules) are supported without use of a transpiler or bundler.
 
 # License
 
