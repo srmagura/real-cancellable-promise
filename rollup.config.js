@@ -4,12 +4,12 @@ export default {
     input: 'src/index.ts',
     output: [
         {
-            file: 'dist/index.cjs',
-            format: 'cjs',
+            file: 'dist/index.mjs',
+            format: 'es',
         },
         {
             dir: 'dist',
-            format: 'es',
+            format: 'cjs',
         },
     ],
     plugins: [typescript({ exclude: '**/__tests__/**/*' })],

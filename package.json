@@ -1,6 +1,6 @@
 {
     "name": "real-cancellable-promise",
-    "version": "1.1.0-alpha.1",
+    "version": "1.1.0-alpha.2",
     "description": "A simple cancellable promise implementation that cancels the underlying HTTP call.",
     "keywords": [
         "promise",
@@ -15,8 +15,8 @@
         "url": "https://github.com/srmagura/real-cancellable-promise.git"
     },
     "license": "MIT",
-    "main": "dist/index.cjs",
-    "module": "dist/index.js",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
     "scripts": {
         "setup": "husky install",
