@@ -1590,6 +1590,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/plugin-typescript@npm:^8.2.5":
+  version: 8.2.5
+  resolution: "@rollup/plugin-typescript@npm:8.2.5"
+  dependencies:
+    "@rollup/pluginutils": ^3.1.0
+    resolve: ^1.17.0
+  peerDependencies:
+    rollup: ^2.14.0
+    tslib: "*"
+    typescript: ">=3.7.0"
+  checksum: ab32daf727e05fc1c166b2dc2211c16dd7f8d1fa8b916de60a83a8818ff1a84ddff119a39b4862aa0aa58de1e881053a20d51bf1baeb3d50bcea960872b18143
+  languageName: node
+  linkType: hard
+
+"@rollup/pluginutils@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@rollup/pluginutils@npm:3.1.0"
+  dependencies:
+    "@types/estree": 0.0.39
+    estree-walker: ^1.0.1
+    picomatch: ^2.2.2
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0
+  checksum: 8be16e27863c219edbb25a4e6ec2fe0e1e451d9e917b6a43cf2ae5bc025a6b8faaa40f82a6e53b66d0de37b58ff472c6c3d57a83037ae635041f8df959d6d9aa
+  languageName: node
+  linkType: hard
+
 "@sinonjs/commons@npm:^1.7.0":
   version: 1.8.3
   resolution: "@sinonjs/commons@npm:1.8.3"
@@ -1653,6 +1680,13 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: a797ea09c72307569e3ee08aa3900ca744ce3091114084f2dc59b67a45ee7d01df7865252790dbfa787a7915ce892cdc820c9b920f3683292765fc656b08dc63
+  languageName: node
+  linkType: hard
+
+"@types/estree@npm:0.0.39":
+  version: 0.0.39
+  resolution: "@types/estree@npm:0.0.39"
+  checksum: 412fb5b9868f2c418126451821833414189b75cc6bf84361156feed733e3d92ec220b9d74a89e52722e03d5e241b2932732711b7497374a404fad49087adc248
   languageName: node
   linkType: hard
 
@@ -3149,6 +3183,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"estree-walker@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "estree-walker@npm:1.0.1"
+  checksum: 7e70da539691f6db03a08e7ce94f394ce2eef4180e136d251af299d41f92fb2d28ebcd9a6e393e3728d7970aeb5358705ddf7209d52fbcb2dd4693f95dcf925f
+  languageName: node
+  linkType: hard
+
 "esutils@npm:^2.0.2":
   version: 2.0.3
   resolution: "esutils@npm:2.0.3"
@@ -3334,7 +3375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-fsevents@^2.3.2:
+"fsevents@^2.3.2, fsevents@~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
   dependencies:
@@ -3343,7 +3384,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>":
+"fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
   resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=1cc4b2"
   dependencies:
@@ -5432,7 +5473,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"picomatch@npm:^2.0.4, picomatch@npm:^2.2.3":
+"picomatch@npm:^2.0.4, picomatch@npm:^2.2.2, picomatch@npm:^2.2.3":
   version: 2.3.0
   resolution: "picomatch@npm:2.3.0"
   checksum: 16818720ea7c5872b6af110760dee856c8e4cd79aed1c7a006d076b1cc09eff3ae41ca5019966694c33fbd2e1cc6ea617ab10e4adac6df06556168f13be3fca2
@@ -5649,6 +5690,7 @@ fsevents@^2.3.2:
     "@babel/core": ^7.15.5
     "@babel/preset-env": ^7.15.6
     "@babel/preset-typescript": ^7.15.0
+    "@rollup/plugin-typescript": ^8.2.5
     "@types/jest": ^27.0.1
     "@typescript-eslint/eslint-plugin": ^4.31.1
     "@typescript-eslint/parser": ^4.31.1
@@ -5665,6 +5707,8 @@ fsevents@^2.3.2:
     pinst: ^2.1.6
     prettier: ^2.4.0
     rimraf: ^3.0.2
+    rollup: ^2.57.0
+    tslib: ^2.3.1
     typedoc: ^0.22.3
     typescript: ^4.4.3
   languageName: unknown
@@ -5778,7 +5822,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"resolve@^1.10.0, resolve@^1.14.2, resolve@^1.20.0":
+"resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.20.0":
   version: 1.20.0
   resolution: "resolve@npm:1.20.0"
   dependencies:
@@ -5788,7 +5832,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>":
+"resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>":
   version: 1.20.0
   resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=00b1ff"
   dependencies:
@@ -5830,6 +5874,20 @@ fsevents@^2.3.2:
   bin:
     rimraf: bin.js
   checksum: 87f4164e396f0171b0a3386cc1877a817f572148ee13a7e113b238e48e8a9f2f31d009a92ec38a591ff1567d9662c6b67fd8818a2dbbaed74bc26a87a2a4a9a0
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^2.57.0":
+  version: 2.57.0
+  resolution: "rollup@npm:2.57.0"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 72427487d1f956ac1431b0db7a88ea542475630c9f0cc279a2f6be68138107bff00506d49d189780f77f189a17dcf83ee7be712a58145a6a910a3e23deb5f85d
   languageName: node
   linkType: hard
 
@@ -6443,6 +6501,13 @@ fsevents@^2.3.2:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "tslib@npm:2.3.1"
+  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
   languageName: node
   linkType: hard
 

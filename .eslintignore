@@ -2,4 +2,5 @@
 .prettierrc.cjs
 babel.config.cjs
 jest.config.cjs
+rollup.config.js
 dist/
