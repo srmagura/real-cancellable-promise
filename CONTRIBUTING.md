@@ -5,9 +5,10 @@ Contributions are welcome.
 ## Development
 
 1. `yarn install`
-2. Check for type errors: `yarn tsc`
-3. Run tests: `yarn test`
-4. Run ESLint: `yarn lint-all`
+2. `yarn setup` — setup precommit hook
+3. Check for type errors: `yarn tsc`
+4. Run tests: `yarn test`
+5. Run ESLint: `yarn lint-all`
 
 ## Publishing
 

@@ -1,5 +1,7 @@
 docs/
 src/
+.husky/
+.github/
 internal-docs/
 babel.config.cjs
 .eslintrc.cjs
@@ -10,3 +12,5 @@ jest.config.cjs
 *.code-workspace
 typedoc.json
 tsconfig.json
+.npmignore
+rollup.config.js
