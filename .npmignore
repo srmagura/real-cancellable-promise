@@ -1,13 +1,13 @@
 dist/__tests__
 docs/
+src/
 internal-docs/
 babel.config.cjs
-lint-staged.config.js
 .eslintrc.cjs
 .eslintignore
 .prettierrc.cjs
 .prettierignore
 jest.config.cjs
-real-cancellable-promise.code-workspace
+*.code-workspace
 typedoc.json
 tsconfig.json
