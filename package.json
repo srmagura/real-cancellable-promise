@@ -18,16 +18,19 @@
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
-        "setup": "husky install",
-        "clean": "rimraf dist",
         "build": "yarn clean && rollup -c",
-        "test": "jest",
+        "clean": "rimraf dist",
         "lint": "eslint",
         "lint-all": "yarn lint '**/*.ts?(x)'",
-        "prettier-all": "prettier '**/*.ts?(x)'",
+        "lint-staged": "lint-staged --no-stash",
         "prepack": "yarn build",
-        "lint-staged": "lint-staged --no-stash"
+        "prettier-all": "prettier '**/*.ts?(x)'",
+        "setup": "husky install",
+        "test": "jest"
     },
     "lint-staged": {
         "*.ts?(x)": [
