@@ -9,11 +9,9 @@ module.exports = {
     parserOptions: {
         project: './tsconfig.json',
     },
+    ignorePatterns: ['*.cjs', 'dist/'],
     rules: {
         'import/prefer-default-export': 'off',
-
-        // add back if we switch to publishing ES modules.
-        // 'import/extensions': ['error', 'always'],
 
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'no-restricted-syntax': [
