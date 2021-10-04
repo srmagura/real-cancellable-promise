@@ -25,13 +25,13 @@
         "build": "yarn clean && rollup -c .config/rollup.config.js",
         "clean": "rimraf dist",
         "lint": "eslint",
-        "lint-all": "yarn lint '**/*.ts?(x)'",
+        "lint-all": "yarn lint .",
         "lint-staged": "lint-staged --no-stash",
         "prepack": "yarn build",
-        "prettier-all": "prettier '**/*.ts?(x)' --write",
+        "prettier-all": "prettier . --write",
         "setup": "husky install",
         "test": "jest --config .config/jest.config.cjs",
-        "typedoc": "typedoc --options .config/typedoc.json"
+        "typedoc": "typedoc --options .config/typedoc.json src/"
     },
     "lint-staged": {
         "*.ts?(x)": [

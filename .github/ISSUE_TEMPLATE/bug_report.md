@@ -4,7 +4,6 @@ about: Create a report to help us improve
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 **Describe the bug**
@@ -20,8 +19,9 @@ What actually happened.
 A clear and concise description of what you expected to happen.
 
 **Versions**
-- real-cancellable-promise version:
-- Browser / Node / React Native version:
+
+-   real-cancellable-promise version:
+-   Browser / Node / React Native version:
 
 **Additional context**
 Add any other context about the problem here.

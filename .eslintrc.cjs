@@ -9,7 +9,7 @@ module.exports = {
     parserOptions: {
         project: './tsconfig.json',
     },
-    ignorePatterns: ['*.cjs', 'dist/'],
+    ignorePatterns: ['*.cjs', 'dist/', 'docs/'],
     rules: {
         'import/prefer-default-export': 'off',
 
