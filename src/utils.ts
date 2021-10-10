@@ -12,7 +12,7 @@ import { noop } from './noop'
  */
 export function pseudoCancellable<T>(promise: PromiseLike<T>): CancellablePromise<T> {
     let canceled = false
-    let rejectFn: (reason?: any) => void = noop
+    let rejectFn: (reason?: unknown) => void = noop
 
     const newPromise = new Promise<T>((resolve, reject) => {
         rejectFn = reject

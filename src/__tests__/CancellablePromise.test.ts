@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 // Jest bug: https://github.com/facebook/jest/issues/11876
 // Jest bug 2: https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/55803
 import { CancellablePromise } from '../CancellablePromise'
@@ -337,7 +338,7 @@ describe('all', () => {
 })
 
 describe('race', () => {
-    it('never resolves if no arguments given', async () => {
+    it('never resolves if no arguments given', () => {
         CancellablePromise.race([]).then(fail).catch(fail)
         jest.runAllTimers()
     })

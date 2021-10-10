@@ -12,8 +12,8 @@ export type PromiseWithCancel<T> = PromiseLike<T> & { cancel(): void }
 export function isPromiseWithCancel<T>(value: unknown): value is PromiseWithCancel<T> {
     return (
         typeof value === 'object' &&
-        typeof (value as any).then === 'function' &&
-        typeof (value as any).cancel === 'function'
+        typeof (value as { then?: unknown }).then === 'function' &&
+        typeof (value as { cancel?: unknown }).cancel === 'function'
     )
 }
 
@@ -77,7 +77,7 @@ export class CancellablePromise<T> {
     then<TResult1 = T, TResult2 = never>(
         onFulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
         onRejected?:
-            | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+            | ((reason: any) => TResult2 | PromiseLike<TResult2>) // eslint-disable-line @typescript-eslint/no-explicit-any -- to match the types used for Promise in the official lib.d.ts
             | undefined
             | null
     ): CancellablePromise<TResult1 | TResult2> {
@@ -96,7 +96,7 @@ export class CancellablePromise<T> {
         }
 
         if (onRejected) {
-            reject = (reason: any): TResult2 | PromiseLike<TResult2> => {
+            reject = (reason: unknown): TResult2 | PromiseLike<TResult2> => {
                 const nextValue: TResult2 | PromiseLike<TResult2> = onRejected(reason)
 
                 if (isPromiseWithCancel(nextValue)) callbackPromiseWithCancel = nextValue
@@ -119,7 +119,7 @@ export class CancellablePromise<T> {
      * Analogous to `Promise.catch`.
      */
     catch<TResult = never>(
-        onRejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+        onRejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null // eslint-disable-line @typescript-eslint/no-explicit-any -- to match the types used for Promise in the official lib.d.ts
     ): CancellablePromise<T | TResult> {
         return this.then(undefined, onRejected)
     }
@@ -140,7 +140,7 @@ export class CancellablePromise<T> {
      * This is necessary to make `CancellablePromise` assignable to `Promise`.
      */
     // eslint-disable-next-line class-methods-use-this
-    get [Symbol.toStringTag]() {
+    get [Symbol.toStringTag](): string {
         return 'CancellablePromise'
     }
 
@@ -443,7 +443,7 @@ export class CancellablePromise<T> {
      */
     static delay(ms: number): CancellablePromise<void> {
         let timer: NodeJS.Timer | undefined
-        let rejectFn: (reason?: any) => void = noop
+        let rejectFn: (reason?: unknown) => void = noop
 
         const promise = new Promise<void>((resolve, reject) => {
             timer = setTimeout(() => {

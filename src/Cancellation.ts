@@ -2,7 +2,7 @@
  * If canceled, a [[`CancellablePromise`]] should throw an `Cancellation` object.
  */
 export class Cancellation extends Error {
-    constructor(message: string = 'Promise canceled.') {
+    constructor(message = 'Promise canceled.') {
         super(message)
     }
 }
