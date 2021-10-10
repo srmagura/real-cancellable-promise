@@ -3,11 +3,12 @@ module.exports = {
         'airbnb-base',
         'airbnb-typescript/base',
         'plugin:promise/recommended',
+        'plugin:jest/recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'prettier',
     ],
-    plugins: ['promise'],
+    plugins: ['promise', 'jest'],
     parserOptions: {
         project: './tsconfig.json',
     },

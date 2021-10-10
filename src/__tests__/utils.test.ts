@@ -23,7 +23,7 @@ describe('pseudoCancellable', () => {
         const p = pseudoCancellable(delay(1000))
         jest.runAllTimers()
 
-        await p
+        expect(await p).toBeUndefined()
         p.cancel()
     })
 })

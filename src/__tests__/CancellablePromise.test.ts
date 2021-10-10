@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable jest/valid-expect-in-promise -- rule is bugged, see https://github.com/jest-community/eslint-plugin-jest/issues/930 */
 // Jest bug: https://github.com/facebook/jest/issues/11876
-// Jest bug 2: https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/55803
 import { CancellablePromise } from '../CancellablePromise'
 import { Cancellation } from '../Cancellation'
 import { defaultDuration, delay, getPromise, fail } from './__helpers__'
@@ -9,6 +9,7 @@ beforeEach(() => {
     jest.useFakeTimers()
 })
 
+// eslint-disable-next-line jest/expect-expect -- TypeScript test
 it('is assignable to Promise', () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const x: Promise<number> = getPromise(0)
@@ -155,12 +156,15 @@ describe('catch', () => {
     })
 
     it('handles rejection', async () => {
+        /* eslint-disable jest/no-conditional-expect */
         const p = getPromise(1, { shouldResolve: false }).catch((e) => {
             expect(e).toBeInstanceOf(Error)
             expect(e.message).toBe('myError')
 
             return 'handled'
         })
+        /* eslint-enable jest/no-conditional-expect */
+
         jest.runAllTimers()
 
         expect(await p).toBe('handled')
@@ -215,6 +219,7 @@ describe('reject', () => {
 })
 
 describe('all', () => {
+    // eslint-disable-next-line jest/expect-expect -- TypeScript test
     it('is typesafe', async () => {
         const p0: CancellablePromise<0> = getPromise<0>(0)
         const p1: CancellablePromise<1> = getPromise<1>(1)
@@ -338,6 +343,7 @@ describe('all', () => {
 })
 
 describe('race', () => {
+    // eslint-disable-next-line jest/expect-expect -- testing no exception
     it('never resolves if no arguments given', () => {
         CancellablePromise.race([]).then(fail).catch(fail)
         jest.runAllTimers()
@@ -477,7 +483,7 @@ describe('delay', () => {
         const p = CancellablePromise.delay(100)
         jest.runAllTimers()
 
-        await p
+        expect(await p).toBeUndefined()
         p.cancel()
     })
 })
