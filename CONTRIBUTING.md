@@ -7,8 +7,9 @@ Contributions are welcome.
 1. `yarn install`
 2. `yarn setup` — setup precommit hook
 3. Check for type errors: `yarn tsc`
-4. Run tests: `yarn test`
-5. Run ESLint: `yarn lint-all`
+4. Run Rollup: `yarn build`
+5. Run tests: `yarn test`
+6. Run ESLint: `yarn lint-all`
 
 ## Publishing
 
