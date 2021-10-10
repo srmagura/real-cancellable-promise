@@ -137,6 +137,14 @@ export class CancellablePromise<T> {
     }
 
     /**
+     * This is necessary to make `CancellablePromise` assignable to `Promise`.
+     */
+    // eslint-disable-next-line class-methods-use-this
+    get [Symbol.toStringTag]() {
+        return 'CancellablePromise'
+    }
+
+    /**
      * Analogous to `Promise.resolve`.
      *
      * The returned promise should resolve even if it is canceled. The idea is

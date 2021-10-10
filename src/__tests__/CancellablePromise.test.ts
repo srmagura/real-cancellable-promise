@@ -8,6 +8,15 @@ beforeEach(() => {
     jest.useFakeTimers()
 })
 
+it('is assignable to Promise', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const x: Promise<number> = getPromise(0)
+})
+
+test('toString', () => {
+    expect(getPromise(1).toString()).toBe('[object CancellablePromise]')
+})
+
 describe('constructor', () => {
     it('supports canceling with a reason', async () => {
         const p = getPromise(0, { cancellationReason: 'myReason' })
