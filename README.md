@@ -4,13 +4,13 @@ A simple cancellable promise implementation for JavaScript and TypeScript.
 
 [Read the announcement post for a full explanation.](https://dev.to/srmagura/announcing-real-cancellable-promise-gkd) In particular, see the "Prior art" section for a comparison to existing cancellable promise libraries.
 
--   ⚛ Built with React in mind — no more "setState after unmount" warnings!
 -   ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
     [jQuery.ajax](#jQuery)
 -   🐦 Lightweight — zero dependencies and less than 1 kB minified and gzipped
 -   🏭 Used in production by [Interface
     Technologies](http://www.iticentral.com/)
 -   💻 Optimized for TypeScript
+-   ⚛ Built with React in mind
 -   🔎 Compatible with
     [react-query](https://react-query.tanstack.com/guides/query-cancellation)
     query cancellation out of the box
@@ -320,59 +320,6 @@ await cancellablePromise // throws Cancellation object if promise did not alread
 ```ts
 await CancellablePromise.delay(1000) // wait 1 second
 ```
-
-## React: `useCancellablePromiseCleanup`
-
-Here's a React hook that facilitates cancellation of `CancellablePromise`s that
-occur outside of `useEffect`. Any captured API calls will be canceled when the
-component unmounts. (Just be sure this is what you want to happen.)
-
-```ts
-export function useCancellablePromiseCleanup(): CaptureCancellablePromise {
-    const cancellablePromisesRef = useRef<CancellablePromise<unknown>[]>([])
-
-    useEffect(
-        () => () => {
-            for (const promise of cancellablePromisesRef.current) {
-                promise.cancel()
-            }
-        },
-        []
-    )
-
-    const capture: CaptureCancellablePromise = useCallback((promise) => {
-        cancellablePromisesRef.current.push(promise)
-        return promise
-    }, [])
-
-    return capture
-}
-```
-
-Then in your React components...
-
-```tsx
-function updateUser(id: number, name: string): CancellablePromise<void> {
-    // call the API
-}
-
-export function UserDetail(props: UserDetailProps) {
-    const capture = useCancellablePromiseCleanup()
-
-    async function saveChanges(): Promise<void> {
-        try {
-            await capture(updateUser(id, name))
-        } catch {
-            // ...
-        }
-    }
-
-    return <div>...</div>
-}
-```
-
-[CodeSandbox:
-useCancellablePromiseCleanup](https://codesandbox.io/s/real-cancellable-promise-usecancellablepromisecleanup-0jozc?file=/src/App.tsx)
 
 # Supported Platforms
 
