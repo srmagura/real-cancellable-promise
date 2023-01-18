@@ -44,9 +44,9 @@ export function pseudoCancellable<T>(promise: PromiseLike<T>): CancellablePromis
 /**
  * The type of the `capture` function used in [[`buildCancellablePromise`]].
  */
-export type CaptureCancellablePromise = <T>(
-    promise: CancellablePromise<T>
-) => CancellablePromise<T>
+export type CaptureCancellablePromise = <P extends CancellablePromise<unknown>>(
+    promise: P
+) => P
 
 /**
  * Used to build a single [[`CancellablePromise`]] from a multi-step asynchronous
@@ -73,7 +73,7 @@ export type CaptureCancellablePromise = <T>(
  * a regular `Promise`
  */
 export function buildCancellablePromise<T>(
-    innerFunc: (capture: CaptureCancellablePromise) => Promise<T>
+    innerFunc: (capture: CaptureCancellablePromise) => PromiseLike<T>
 ): CancellablePromise<T> {
     const capturedPromises: CancellablePromise<unknown>[] = []
 
