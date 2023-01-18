@@ -96,3 +96,27 @@ describe('buildCancellablePromise', () => {
         await expect(p).rejects.toThrow(error)
     })
 })
+
+describe('buildCancellablePromise capture', () => {
+    it('passes through the argument type', async () => {
+        // this is a "compile-time" test
+        // it will only be tested when compiled with TypeScript (`$ yarn tsc`)
+        const promise = buildCancellablePromise(async (capture) => {
+            // we build two promises that we enhance with some additional fields
+            const fancyPromise1 = Object.assign( getPromise('1'), { reportProgress: () => 0.9 } )
+            const fancyPromise2 = Object.assign( getPromise('2'), { info: "some enhanced promise" } )
+            const capturedFancyPromise1 = capture(fancyPromise1)
+            const capturedFancyPromise2 = capture(fancyPromise2)
+            { // these will throw a compile time error if `capture` is not an identity function (from type perspective)
+                // the field `reportProgress` should be accessible on the type that passes through the `caputure` function
+                expect(capturedFancyPromise1.reportProgress()).toBe(0.9)
+                // the `info` field should be accessible even if the promise is passed through the `capture` function
+                expect(capturedFancyPromise2.info).toBe("some enhanced promise")
+            }
+            return [await capturedFancyPromise1, await capturedFancyPromise2]
+        })
+        const [res1, res2] = await promise
+        expect(res1).toBe("1")
+        expect(res2).toBe("2")
+    })
+})
