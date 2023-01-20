@@ -107,12 +107,12 @@ describe('buildCancellablePromise capture', () => {
             const fancyPromise2 = Object.assign( getPromise('2'), { info: "some enhanced promise" } )
             const capturedFancyPromise1 = capture(fancyPromise1)
             const capturedFancyPromise2 = capture(fancyPromise2)
-            { // these will throw a compile time error if `capture` is not an identity function (from type perspective)
-                // the field `reportProgress` should be accessible on the type that passes through the `caputure` function
-                expect(capturedFancyPromise1.reportProgress()).toBe(0.9)
-                // the `info` field should be accessible even if the promise is passed through the `capture` function
-                expect(capturedFancyPromise2.info).toBe("some enhanced promise")
-            }
+            // these will throw a compile time error if `capture` is not an identity function (from type perspective):
+            // the field `reportProgress` should be accessible on the type that passes through the `caputure` function
+            expect(capturedFancyPromise1.reportProgress()).toBe(0.9)
+            // the `info` field should be accessible even if the promise is passed through the `capture` function
+            expect(capturedFancyPromise2.info).toBe("some enhanced promise")
+
             return [await capturedFancyPromise1, await capturedFancyPromise2]
         })
         const [res1, res2] = await promise
