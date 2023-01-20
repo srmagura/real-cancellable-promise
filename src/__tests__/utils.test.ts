@@ -99,6 +99,7 @@ describe('buildCancellablePromise', () => {
 
 describe('buildCancellablePromise capture', () => {
     it('passes through the argument type', async () => {
+        jest.useRealTimers()
         // this is a "compile-time" test
         // it will only be tested when compiled with TypeScript (`$ yarn tsc`)
         const promise = buildCancellablePromise(async (capture) => {
