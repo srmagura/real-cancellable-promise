@@ -1,3 +1,10 @@
+## 1.1.2
+
+### Bug Fixes
+
+-   Make the `capture` function of `buildCancellablePromise` an identity function
+    from a type perspective.
+
 ## 1.1.1
 
 ### Bug Fixes
