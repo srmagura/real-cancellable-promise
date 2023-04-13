@@ -4,16 +4,16 @@ A simple cancellable promise implementation for JavaScript and TypeScript.
 
 [Read the announcement post for a full explanation.](https://dev.to/srmagura/announcing-real-cancellable-promise-gkd) In particular, see the "Prior art" section for a comparison to existing cancellable promise libraries.
 
--   ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
-    [jQuery.ajax](#jQuery)
--   🐦 Lightweight — zero dependencies and less than 1 kB minified and gzipped
--   🏭 Used in production by [Interface
-    Technologies](http://www.iticentral.com/)
--   💻 Optimized for TypeScript
--   ⚛ Built with React in mind
--   🔎 Compatible with
-    [react-query](https://react-query.tanstack.com/guides/query-cancellation)
-    query cancellation out of the box
+- ⚡ Compatible with [fetch](#fetch), [axios](#axios), and
+  [jQuery.ajax](#jQuery)
+- 🐦 Lightweight — zero dependencies and less than 1 kB minified and gzipped
+- 🏭 Used in production by [Interface
+  Technologies](http://www.iticentral.com/)
+- 💻 Optimized for TypeScript
+- ⚛ Built with React in mind
+- 🔎 Compatible with
+  [react-query](https://react-query.tanstack.com/guides/query-cancellation)
+  query cancellation out of the box
 
 # The Basics
 
@@ -22,13 +22,13 @@ yarn add real-cancellable-promise
 ```
 
 ```ts
-import { CancellablePromise } from 'real-cancellable-promise'
+import { CancellablePromise } from 'real-cancellable-promise';
 
-const cancellablePromise = new CancellablePromise(normalPromise, cancel)
+const cancellablePromise = new CancellablePromise(normalPromise, cancel);
 
-cancellablePromise.cancel()
+cancellablePromise.cancel();
 
-await cancellablePromise // throws a Cancellation object that subclasses Error
+await cancellablePromise; // throws a Cancellation object that subclasses Error
 ```
 
 ### Important
@@ -39,7 +39,7 @@ Your `cancel` function **MUST** cause `promise` to reject with a `Cancellation` 
 This will **NOT** work, your callbacks with still run:
 
 ```ts
-new CancellablePromise(normalPromise, () => {})
+new CancellablePromise(normalPromise, () => {});
 ```
 
 # Usage with HTTP Libraries
@@ -50,30 +50,30 @@ How do I convert a normal `Promise` to a `CancellablePromise`?
 
 ```ts
 export function cancellableFetch(
-    input: RequestInfo,
-    init: RequestInit = {}
+  input: RequestInfo,
+  init: RequestInit = {}
 ): CancellablePromise<Response> {
-    const controller = new AbortController()
+  const controller = new AbortController();
 
-    const promise = fetch(input, {
-        ...init,
-        signal: controller.signal,
-    }).catch((e) => {
-        if (e.name === 'AbortError') {
-            throw new Cancellation()
-        }
+  const promise = fetch(input, {
+    ...init,
+    signal: controller.signal,
+  }).catch((e) => {
+    if (e.name === 'AbortError') {
+      throw new Cancellation();
+    }
 
-        // rethrow the original error
-        throw e
-    })
+    // rethrow the original error
+    throw e;
+  });
 
-    return new CancellablePromise<Response>(promise, () => controller.abort())
+  return new CancellablePromise<Response>(promise, () => controller.abort());
 }
 
 // Use just like normal fetch:
 const cancellablePromise = cancellableFetch(url, {
-    /* pass options here */
-})
+  /* pass options here */
+});
 ```
 
 <details>
@@ -81,37 +81,37 @@ const cancellablePromise = cancellableFetch(url, {
 
 ```ts
 export function cancellableFetch<T>(
-    input: RequestInfo,
-    init: RequestInit = {}
+  input: RequestInfo,
+  init: RequestInit = {}
 ): CancellablePromise<T> {
-    const controller = new AbortController()
+  const controller = new AbortController();
 
-    const promise = fetch(input, {
-        ...init,
-        signal: controller.signal,
+  const promise = fetch(input, {
+    ...init,
+    signal: controller.signal,
+  })
+    .then((response) => {
+      // Handle the response object however you want
+      if (!response.ok) {
+        throw new Error(`Fetch failed with status code ${response.status}.`);
+      }
+
+      if (response.headers.get('content-type')?.includes('application/json')) {
+        return response.json();
+      } else {
+        return response.text();
+      }
     })
-        .then((response) => {
-            // Handle the response object however you want
-            if (!response.ok) {
-                throw new Error(`Fetch failed with status code ${response.status}.`)
-            }
+    .catch((e) => {
+      if (e.name === 'AbortError') {
+        throw new Cancellation();
+      }
 
-            if (response.headers.get('content-type')?.includes('application/json')) {
-                return response.json()
-            } else {
-                return response.text()
-            }
-        })
-        .catch((e) => {
-            if (e.name === 'AbortError') {
-                throw new Cancellation()
-            }
+      // rethrow the original error
+      throw e;
+    });
 
-            // rethrow the original error
-            throw e
-        })
-
-    return new CancellablePromise<T>(promise, () => controller.abort())
+  return new CancellablePromise<T>(promise, () => controller.abort());
 }
 ```
 
@@ -120,48 +120,50 @@ export function cancellableFetch<T>(
 ## <a name="axios" href="https://axios-http.com/">axios</a>
 
 ```ts
-export function cancellableAxios<T>(config: AxiosRequestConfig): CancellablePromise<T> {
-    const source = axios.CancelToken.source()
-    config = { ...config, cancelToken: source.token }
+export function cancellableAxios<T>(
+  config: AxiosRequestConfig
+): CancellablePromise<T> {
+  const source = axios.CancelToken.source();
+  config = { ...config, cancelToken: source.token };
 
-    const promise = axios(config)
-        .then((response) => response.data)
-        .catch((e) => {
-            if (e instanceof axios.Cancel) {
-                throw new Cancellation()
-            }
+  const promise = axios(config)
+    .then((response) => response.data)
+    .catch((e) => {
+      if (e instanceof axios.Cancel) {
+        throw new Cancellation();
+      }
 
-            // rethrow the original error
-            throw e
-        })
+      // rethrow the original error
+      throw e;
+    });
 
-    return new CancellablePromise<T>(promise, () => source.cancel())
+  return new CancellablePromise<T>(promise, () => source.cancel());
 }
 
 // Use just like normal axios:
-const cancellablePromise = cancellableAxios({ url })
+const cancellablePromise = cancellableAxios({ url });
 ```
 
 ## <a name="jQuery" href="https://api.jquery.com/category/ajax/">jQuery.ajax</a>
 
 ```ts
 export function cancellableJQueryAjax<T>(
-    settings: JQuery.AjaxSettings
+  settings: JQuery.AjaxSettings
 ): CancellablePromise<T> {
-    const xhr = $.ajax(settings)
+  const xhr = $.ajax(settings);
 
-    const promise = xhr.catch((e) => {
-        if (e.statusText === 'abort') throw new Cancellation()
+  const promise = xhr.catch((e) => {
+    if (e.statusText === 'abort') throw new Cancellation();
 
-        // rethrow the original error
-        throw e
-    })
+    // rethrow the original error
+    throw e;
+  });
 
-    return new CancellablePromise<T>(promise, () => xhr.abort())
+  return new CancellablePromise<T>(promise, () => xhr.abort());
 }
 
 // Use just like normal $.ajax:
-const cancellablePromise = cancellableJQueryAjax({ url, dataType: 'json' })
+const cancellablePromise = cancellableJQueryAjax({ url, dataType: 'json' });
 ```
 
 [CodeSandbox: HTTP
@@ -185,26 +187,28 @@ You can fix this by canceling the API call in the cleanup function of an effect.
 
 ```tsx
 function listBlogPosts(): CancellablePromise<Post[]> {
-    // call the API
+  // call the API
 }
 
 export function Blog() {
-    const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<Post[]>([]);
 
-    useEffect(() => {
-        const cancellablePromise = listBlogPosts().then(setPosts).catch(console.error)
+  useEffect(() => {
+    const cancellablePromise = listBlogPosts()
+      .then(setPosts)
+      .catch(console.error);
 
-        // The promise will get canceled when the component unmounts
-        return cancellablePromise.cancel
-    }, [])
+    // The promise will get canceled when the component unmounts
+    return cancellablePromise.cancel;
+  }, []);
 
-    return (
-        <div>
-            {posts.map((p) => {
-                /* ... */
-            })}
-        </div>
-    )
+  return (
+    <div>
+      {posts.map((p) => {
+        /* ... */
+      })}
+    </div>
+  );
 }
 ```
 
@@ -217,33 +221,33 @@ Sometimes API calls have parameters, like a search string entered by the user.
 
 ```tsx
 function searchUsers(searchTerm: string): CancellablePromise<User[]> {
-    // call the API
+  // call the API
 }
 
 export function UserList() {
-    const [searchTerm, setSearchTerm] = useState('')
-    const [users, setUsers] = useState<User[]>([])
+  const [searchTerm, setSearchTerm] = useState('');
+  const [users, setUsers] = useState<User[]>([]);
 
-    // In a real app you should debounce the searchTerm
-    useEffect(() => {
-        const cancellablePromise = searchUsers(searchTerm)
-            .then(setUsers)
-            .catch(console.error)
+  // In a real app you should debounce the searchTerm
+  useEffect(() => {
+    const cancellablePromise = searchUsers(searchTerm)
+      .then(setUsers)
+      .catch(console.error);
 
-        // The old API call gets canceled whenever searchTerm changes. This prevents
-        // setUsers from being called with incorrect results if the API calls complete
-        // out of order.
-        return cancellablePromise.cancel
-    }, [searchTerm])
+    // The old API call gets canceled whenever searchTerm changes. This prevents
+    // setUsers from being called with incorrect results if the API calls complete
+    // out of order.
+    return cancellablePromise.cancel;
+  }, [searchTerm]);
 
-    return (
-        <div>
-            <SearchInput searchTerm={searchTerm} onChange={setSearchTerm} />
-            {users.map((u) => {
-                /* ... */
-            })}
-        </div>
-    )
+  return (
+    <div>
+      <SearchInput searchTerm={searchTerm} onChange={setSearchTerm} />
+      {users.map((u) => {
+        /* ... */
+      })}
+    </div>
+  );
 }
 ```
 
@@ -259,19 +263,19 @@ already completed).
 
 ```ts
 function bigQuery(userId: number): CancellablePromise<QueryResult> {
-    return buildCancellablePromise(async (capture) => {
-        const userPromise = api.user.get(userId)
-        const rolePromise = api.user.listRoles(userId)
+  return buildCancellablePromise(async (capture) => {
+    const userPromise = api.user.get(userId);
+    const rolePromise = api.user.listRoles(userId);
 
-        const [user, roles] = await capture(
-            CancellablePromise.all([userPromise, rolePromise])
-        )
+    const [user, roles] = await capture(
+      CancellablePromise.all([userPromise, rolePromise])
+    );
 
-        // User must be loaded before this query can run
-        const customer = await capture(api.customer.get(user.customerId))
+    // User must be loaded before this query can run
+    const customer = await capture(api.customer.get(user.customerId));
 
-        return { user, roles, customer }
-    })
+    return { user, roles, customer };
+  });
 }
 ```
 
@@ -289,15 +293,15 @@ Usually, you'll want to ignore `Cancellation` objects that get thrown:
 
 ```ts
 try {
-    await capture(cancellablePromise)
+  await capture(cancellablePromise);
 } catch (e) {
-    if (e instanceof Cancellation) {
-        // do nothing — the component probably just unmounted.
-        // or you could do something here it's up to you 😆
-        return
-    }
+  if (e instanceof Cancellation) {
+    // do nothing — the component probably just unmounted.
+    // or you could do something here it's up to you 😆
+    return;
+  }
 
-    // log the error or display it to the user
+  // log the error or display it to the user
 }
 ```
 
@@ -307,18 +311,18 @@ Sometimes you need to call an asynchronous function that doesn't support
 cancellation. In this case, you can use `pseudoCancellable`:
 
 ```ts
-const cancellablePromise = pseudoCancellable(normalPromise)
+const cancellablePromise = pseudoCancellable(normalPromise);
 
 // Later...
-cancellablePromise.cancel()
+cancellablePromise.cancel();
 
-await cancellablePromise // throws Cancellation object if promise did not already resolve
+await cancellablePromise; // throws Cancellation object if promise did not already resolve
 ```
 
 ## `CancellablePromise.delay`
 
 ```ts
-await CancellablePromise.delay(1000) // wait 1 second
+await CancellablePromise.delay(1000); // wait 1 second
 ```
 
 # Supported Platforms

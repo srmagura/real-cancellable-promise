@@ -20,8 +20,8 @@ A clear and concise description of what you expected to happen.
 
 **Versions**
 
--   real-cancellable-promise version:
--   Browser / Node / React Native version:
+- real-cancellable-promise version:
+- Browser / Node / React Native version:
 
 **Additional context**
 Add any other context about the problem here.

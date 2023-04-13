@@ -1,13 +1,13 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
-    timers: 'fake',
-    resetMocks: true,
+  timers: 'fake',
+  resetMocks: true,
 
-    rootDir: path.resolve(__dirname, '..'),
-    testMatch: ['**/__tests__/**/*.test.ts?(x)'],
+  rootDir: path.resolve(__dirname, '..'),
+  testMatch: ['**/__tests__/**/*.test.ts?(x)'],
 
-    transform: {
-        '^.+\\.(t|j)sx?$': ['@swc/jest'],
-    },
-}
+  transform: {
+    '^.+\\.(t|j)sx?$': ['@swc/jest'],
+  },
+};

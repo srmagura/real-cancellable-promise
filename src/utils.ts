@@ -1,6 +1,6 @@
-import { CancellablePromise } from './CancellablePromise'
-import { Cancellation } from './Cancellation'
-import { noop } from './noop'
+import { CancellablePromise } from './CancellablePromise';
+import { Cancellation } from './Cancellation';
+import { noop } from './noop';
 
 /**
  * Takes in a regular `Promise` and returns a `CancellablePromise`. If canceled,
@@ -10,43 +10,45 @@ import { noop } from './noop'
  * Analogous to
  * [make-cancellable-promise](https://www.npmjs.com/package/make-cancellable-promise).
  */
-export function pseudoCancellable<T>(promise: PromiseLike<T>): CancellablePromise<T> {
-    let canceled = false
-    let rejectFn: (reason?: unknown) => void = noop
+export function pseudoCancellable<T>(
+  promise: PromiseLike<T>
+): CancellablePromise<T> {
+  let canceled = false;
+  let rejectFn: (reason?: unknown) => void = noop;
 
-    const newPromise = new Promise<T>((resolve, reject) => {
-        rejectFn = reject
+  const newPromise = new Promise<T>((resolve, reject) => {
+    rejectFn = reject;
 
-        // eslint-disable-next-line promise/catch-or-return -- no catch method on PromiseLike
-        promise.then(
-            (result) => {
-                if (!canceled) {
-                    resolve(result)
-                    rejectFn = noop
-                }
+    // eslint-disable-next-line promise/catch-or-return -- no catch method on PromiseLike
+    promise.then(
+      (result) => {
+        if (!canceled) {
+          resolve(result);
+          rejectFn = noop;
+        }
 
-                return undefined
-            },
-            (e: unknown) => {
-                if (!canceled) reject(e)
-            }
-        )
-    })
+        return undefined;
+      },
+      (e: unknown) => {
+        if (!canceled) reject(e);
+      }
+    );
+  });
 
-    function cancel(): void {
-        canceled = true
-        rejectFn(new Cancellation())
-    }
+  function cancel(): void {
+    canceled = true;
+    rejectFn(new Cancellation());
+  }
 
-    return new CancellablePromise(newPromise, cancel)
+  return new CancellablePromise(newPromise, cancel);
 }
 
 /**
  * The type of the `capture` function used in [[`buildCancellablePromise`]].
  */
 export type CaptureCancellablePromise = <P extends CancellablePromise<unknown>>(
-    promise: P
-) => P
+  promise: P
+) => P;
 
 /**
  * Used to build a single [[`CancellablePromise`]] from a multi-step asynchronous
@@ -73,18 +75,18 @@ export type CaptureCancellablePromise = <P extends CancellablePromise<unknown>>(
  * a regular `Promise`
  */
 export function buildCancellablePromise<T>(
-    innerFunc: (capture: CaptureCancellablePromise) => PromiseLike<T>
+  innerFunc: (capture: CaptureCancellablePromise) => PromiseLike<T>
 ): CancellablePromise<T> {
-    const capturedPromises: CancellablePromise<unknown>[] = []
+  const capturedPromises: CancellablePromise<unknown>[] = [];
 
-    const capture: CaptureCancellablePromise = (promise) => {
-        capturedPromises.push(promise)
-        return promise
-    }
+  const capture: CaptureCancellablePromise = (promise) => {
+    capturedPromises.push(promise);
+    return promise;
+  };
 
-    function cancel(): void {
-        capturedPromises.forEach((p) => p.cancel())
-    }
+  function cancel(): void {
+    capturedPromises.forEach((p) => p.cancel());
+  }
 
-    return new CancellablePromise(innerFunc(capture), cancel)
+  return new CancellablePromise(innerFunc(capture), cancel);
 }
