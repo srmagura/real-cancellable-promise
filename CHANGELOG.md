@@ -1,3 +1,9 @@
+## 1.2.0
+
+### Chores
+
+- Update the signature of `CancellablePromise.race` to match that of `Promise.race` in the latest version of TypeScript. This should not be a breaking change for the vast majority of users. (#todo)
+
 ## 1.1.2
 
 ### Bug Fixes
