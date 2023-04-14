@@ -177,13 +177,9 @@ Reference](https://srmagura.github.io/real-cancellable-promise/modules.html) for
 
 # Examples
 
-## React: Prevent setState after unmount
+## React: Cancel the API call when the component unmounts
 
-React will give you a warning if you attempt to update a component's state after
-it has unmounted. This will happen if your component makes an API call but gets
-unmounted before the API call completes.
-
-You can fix this by canceling the API call in the cleanup function of an effect.
+If your React component makes an API call, you probably don't care about the result of that API call after the component has unmounted. You can cancel the API in the cleanup function of an effect like this:
 
 ```tsx
 function listBlogPosts(): CancellablePromise<Post[]> {
@@ -212,12 +208,14 @@ export function Blog() {
 }
 ```
 
+Before React 18, this was necessary to prevent the infamous "setState after unmount" warning. This warning was removed from React in React 18 because setting state after the component unmounts is usually not indicative of a real problem.
+
 [CodeSandbox: prevent setState after
 unmount](https://codesandbox.io/s/real-cancellable-promise-prevent-setstate-after-unmount-2zqb0?file=/src/App.tsx)
 
 ## React: Cancel the in-progress API call when query parameters change
 
-Sometimes API calls have parameters, like a search string entered by the user.
+Sometimes API calls have parameters, like a search string entered by the user. If the query parameters change, you should cancel any in-progress API calls.
 
 ```tsx
 function searchUsers(searchTerm: string): CancellablePromise<User[]> {
