@@ -2,7 +2,7 @@
 
 ### Chores
 
-- Update the signature of `CancellablePromise.race` to match that of `Promise.race` in the latest version of TypeScript. This should not be a breaking change for the vast majority of users. (#todo)
+- Update the signature of `CancellablePromise.race` to match that of `Promise.race` in the latest version of TypeScript. This should not be a breaking change for the vast majority of users. (#8)
 
 ## 1.1.2
 
