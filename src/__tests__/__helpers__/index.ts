@@ -6,7 +6,9 @@ export function fail(reason = 'fail was called in a test.'): never {
 }
 
 export function delay(duration: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, duration));
+  return new Promise((resolve) => {
+    setTimeout(resolve, duration);
+  });
 }
 
 interface Options {

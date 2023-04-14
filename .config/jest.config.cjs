@@ -1,7 +1,9 @@
 const path = require('path');
 
 module.exports = {
-  timers: 'fake',
+  fakeTimers: {
+    enableGlobally: true,
+  },
   resetMocks: true,
 
   rootDir: path.resolve(__dirname, '..'),
