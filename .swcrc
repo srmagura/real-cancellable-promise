@@ -1,12 +1,12 @@
 {
-    "jsc": {
-        "parser": {
-            "syntax": "typescript"
-        },
-        "target": "es2021"
+  "jsc": {
+    "parser": {
+      "syntax": "typescript"
     },
-    "module": {
-        "type": "commonjs"
-    },
-    "sourceMaps": true
+    "target": "es2021"
+  },
+  "module": {
+    "type": "commonjs"
+  },
+  "sourceMaps": true
 }
