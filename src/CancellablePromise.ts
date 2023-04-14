@@ -122,6 +122,7 @@ export class CancellablePromise<T> {
     return new CancellablePromise(newPromise, newCancel);
   }
 
+  /* eslint-disable @typescript-eslint/no-explicit-any -- to match the types used for Promise in the official lib.d.ts */
   /**
    * Analogous to `Promise.catch`.
    */
@@ -129,10 +130,11 @@ export class CancellablePromise<T> {
     onRejected?:
       | ((reason: any) => TResult | PromiseLike<TResult>)
       | undefined
-      | null // eslint-disable-line @typescript-eslint/no-explicit-any -- to match the types used for Promise in the official lib.d.ts
+      | null
   ): CancellablePromise<T | TResult> {
     return this.then(undefined, onRejected);
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   /**
    * Attaches a callback that is invoked when the Promise is settled
@@ -424,9 +426,9 @@ export class CancellablePromise<T> {
    * @returns A new `CancellablePromise`. Canceling it cancels all of the input
    * promises.
    */
-  static race<T>(
-    values: readonly T[]
-  ): CancellablePromise<T extends PromiseLike<infer U> ? U : T> {
+  static race<T extends readonly unknown[] | []>(
+    values: T
+  ): CancellablePromise<Awaited<T[number]>> {
     const cancel = (): void => {
       for (const value of values) {
         if (isPromiseWithCancel(value)) {
