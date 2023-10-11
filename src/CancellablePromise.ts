@@ -449,9 +449,9 @@ export class CancellablePromise<T> {
    * @returns A new `CancellablePromise`. Canceling it cancels all of the input
    * promises.
    */
-  static raceAndCancel<T extends readonly CancellablePromise<unknown>[] | []>(
+  static raceAndCancel<T extends readonly unknown[] | []>(
       values: T
-  ): CancellablePromise<T[number]> { return buildCancellablePromise( async C => {
+  ): CancellablePromise<Awaited<T[number]>> { return buildCancellablePromise( async C => {
       let race: CancellablePromise<T[number]> | undefined
       try {
           race = C(CancellablePromise.race(values))
