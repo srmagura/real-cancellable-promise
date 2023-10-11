@@ -1,5 +1,6 @@
 import { Cancellation } from './Cancellation';
 import { noop } from './noop';
+import { buildCancellablePromise } from './utils'
 
 /**
  * The most abstract thing we can cancel — a thenable with a cancel method.
@@ -439,6 +440,28 @@ export class CancellablePromise<T> {
 
     return new CancellablePromise(Promise.race(values), cancel);
   }
+
+  /**
+   * Creates a `CancellablePromise` that is resolved or rejected when any of
+   * the provided `Promises` are resolved or rejected.
+   * Afterwards, any remaining promises are cancelled automatically.
+   * @param values An array of `Promises`.
+   * @returns A new `CancellablePromise`. Canceling it cancels all of the input
+   * promises.
+   */
+  static raceAndCancel<T extends readonly CancellablePromise<unknown>[] | []>(
+      values: T
+  ): CancellablePromise<T[number]> { return buildCancellablePromise( async C => {
+      let race: CancellablePromise<T[number]> | undefined
+      try {
+          race = C(CancellablePromise.race(values))
+          const result = await race
+          return result
+      } finally {
+          // cancels all promises that didn't complete in time
+          if (race) race.cancel()
+      }
+  })}
 
   // Promise.any is an ES2021 feature. Not yet implemented.
   // /**
