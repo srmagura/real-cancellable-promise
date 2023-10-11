@@ -74,9 +74,9 @@ export type CaptureCancellablePromise = <P extends CancellablePromise<unknown>>(
  * @param innerFunc an async function that takes in a `capture` function and returns
  * a regular `Promise`
  */
-export function buildCancellablePromise<T>(
-  innerFunc: (capture: CaptureCancellablePromise) => PromiseLike<T>
-): CancellablePromise<T> {
+export function buildCancellablePromise<T extends PromiseLike<unknown>>(
+  innerFunc: (capture: CaptureCancellablePromise) => T
+): CancellablePromise<Awaited<T>> {
   const capturedPromises: CancellablePromise<unknown>[] = [];
 
   const capture: CaptureCancellablePromise = (promise) => {
