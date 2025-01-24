@@ -77,10 +77,11 @@ export type CaptureCancellablePromise = <P extends CancellablePromise<unknown>>(
 export function buildCancellablePromise<T>(
   innerFunc: (capture: CaptureCancellablePromise) => PromiseLike<T>
 ): CancellablePromise<T> {
-  const capturedPromises: CancellablePromise<unknown>[] = [];
+  const capturedPromises = new Set<CancellablePromise<unknown>>();
 
   const capture: CaptureCancellablePromise = (promise) => {
-    capturedPromises.push(promise);
+    capturedPromises.add(promise);
+    promise.finally(() => capturedPromises.delete(promise)).catch(() => {});
     return promise;
   };
 
