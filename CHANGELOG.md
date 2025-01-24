@@ -1,3 +1,9 @@
+## 1.2.1
+
+### Bug Fixes
+
+- Fix memory leak that occurred when using `buildCancellablePromise` to create very long-running tasks. (#13)
+
 ## 1.2.0
 
 ### Chores
