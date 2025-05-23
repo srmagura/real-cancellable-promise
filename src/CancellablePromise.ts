@@ -13,6 +13,8 @@ export function isPromiseWithCancel<T>(
   value: unknown
 ): value is PromiseWithCancel<T> {
   return (
+    // typeof null === "object"
+    value != null && 
     typeof value === 'object' &&
     typeof (value as { then?: unknown }).then === 'function' &&
     typeof (value as { cancel?: unknown }).cancel === 'function'
