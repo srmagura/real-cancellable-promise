@@ -1,3 +1,9 @@
+## 1.2.2
+
+### Bug Fixes
+
+- Fix `.then(() => null)` causing an unhandled exception. (#14)
+
 ## 1.2.1
 
 ### Bug Fixes
