@@ -124,6 +124,13 @@ describe('then', () => {
     await expect(p).rejects.toThrow(Cancellation);
   });
 
+  it('handles then returning null', async () => {
+    const p = getPromise(5).then(() => null)
+    jest.runAllTimers();
+    expect(await p).toBeNull();
+  });
+
+
   it('handles then chaining', async () => {
     jest.useRealTimers();
 
