@@ -204,7 +204,7 @@ describe('catch', () => {
     await expect(p).rejects.toThrow(Cancellation);
   });
 
-  it('will keep cancelling promises even if you handle the cancellation', async () => {
+  it('will keep cancelling promises even if the caller handles the cancellation', async () => {
     jest.useRealTimers();
 
     const errors: unknown[] = [];
