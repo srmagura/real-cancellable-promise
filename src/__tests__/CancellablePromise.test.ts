@@ -157,16 +157,9 @@ describe('then', () => {
   });
 
   it('cancels pending promises', async () => {
-    let doCancel: (e: unknown) => void;
-    const infinite = new CancellablePromise<void>(
-      new Promise((_resolve, reject) => {
-        doCancel = reject;
-      }),
-      () => {
-        doCancel(new Cancellation());
-      }
-    );
-    const p = CancellablePromise.resolve().then(() => infinite);
+    jest.useRealTimers();
+
+    const p = CancellablePromise.resolve().then(() => getPromise(1));
     p.cancel();
     await expect(p).rejects.toThrow(Cancellation);
   });
@@ -206,16 +199,7 @@ describe('catch', () => {
   });
 
   it('cancels pending promises', async () => {
-    let doCancel: (e: unknown) => void;
-    const infinite = new CancellablePromise<void>(
-      new Promise((_resolve, reject) => {
-        doCancel = reject;
-      }),
-      () => {
-        doCancel(new Cancellation());
-      }
-    );
-    const p = CancellablePromise.reject(new Error()).catch(() => infinite);
+    const p = CancellablePromise.reject(new Error()).catch(() => getPromise(1));
     p.cancel();
     await expect(p).rejects.toThrow(Cancellation);
   });
