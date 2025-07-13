@@ -91,7 +91,7 @@ export class CancellablePromise<T> {
     let fulfill;
     let reject;
     let callbackPromiseWithCancel: PromiseWithCancel<unknown> | undefined;
-    let cancelled = false;
+    let canceled = false;
 
     if (onFulfilled) {
       fulfill = (value: T): TResult1 | PromiseLike<TResult1> => {
@@ -99,7 +99,7 @@ export class CancellablePromise<T> {
 
         if (isPromiseWithCancel(nextValue)) {
           callbackPromiseWithCancel = nextValue;
-          if (cancelled) {
+          if (canceled) {
             // so we don't throw away the original result, only cancel the resulting promise
             nextValue.cancel();
           }
@@ -115,7 +115,7 @@ export class CancellablePromise<T> {
 
         if (isPromiseWithCancel(nextValue)) {
           callbackPromiseWithCancel = nextValue;
-          if (cancelled) {
+          if (canceled) {
             // so we don't throw away the original error, only cancel the resulting promise
             nextValue.cancel();
           }
@@ -129,7 +129,7 @@ export class CancellablePromise<T> {
 
     const newCancel = () => {
       this.cancel();
-      cancelled = true;
+      canceled = true;
       callbackPromiseWithCancel?.cancel();
     };
 
