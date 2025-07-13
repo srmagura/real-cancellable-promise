@@ -1,3 +1,9 @@
+## 1.2.4
+
+### Bug Fixes
+
+- Fix `Cancellation` not being thrown in a `.then()` chain if the initial promise has already resolved. (#16)
+
 ## 1.2.2
 
 ### Bug Fixes
