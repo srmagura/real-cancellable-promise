@@ -125,11 +125,10 @@ describe('then', () => {
   });
 
   it('handles then returning null', async () => {
-    const p = getPromise(5).then(() => null)
+    const p = getPromise(5).then(() => null);
     jest.runAllTimers();
     expect(await p).toBeNull();
   });
-
 
   it('handles then chaining', async () => {
     jest.useRealTimers();
@@ -154,6 +153,14 @@ describe('then', () => {
     await delay(defaultDuration * 3.5);
     p.cancel();
 
+    await expect(p).rejects.toThrow(Cancellation);
+  });
+
+  it('cancels pending promises', async () => {
+    jest.useRealTimers();
+
+    const p = CancellablePromise.resolve().then(() => getPromise(1));
+    p.cancel();
     await expect(p).rejects.toThrow(Cancellation);
   });
 });
@@ -189,6 +196,38 @@ describe('catch', () => {
 
     expect(await p).toBeUndefined();
     expect(errorHandler).toHaveBeenCalledWith(new Cancellation());
+  });
+
+  it('cancels pending promises', async () => {
+    const p = CancellablePromise.reject(new Error()).catch(() => getPromise(1));
+    p.cancel();
+    await expect(p).rejects.toThrow(Cancellation);
+  });
+
+  it('will keep cancelling promises even if the caller handles the cancellation', async () => {
+    jest.useRealTimers();
+
+    const errors: unknown[] = [];
+    const p = CancellablePromise.reject(new Cancellation())
+      .catch((e) => {
+        errors.push(e);
+        return getPromise(1);
+      })
+      .catch((e) => {
+        errors.push(e);
+        return getPromise(2);
+      })
+      .catch((e) => {
+        errors.push(e);
+        return 3;
+      });
+    p.cancel();
+    await expect(p).resolves.toBe(3);
+    expect(errors).toHaveLength(3);
+    const [error1, error2, error3] = errors;
+    expect(error1).toBeInstanceOf(Cancellation);
+    expect(error2).toBeInstanceOf(Cancellation);
+    expect(error3).toBeInstanceOf(Cancellation);
   });
 });
 

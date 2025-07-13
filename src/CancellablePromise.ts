@@ -14,7 +14,7 @@ export function isPromiseWithCancel<T>(
 ): value is PromiseWithCancel<T> {
   return (
     // typeof null === "object"
-    value != null && 
+    value != null &&
     typeof value === 'object' &&
     typeof (value as { then?: unknown }).then === 'function' &&
     typeof (value as { cancel?: unknown }).cancel === 'function'
@@ -91,13 +91,19 @@ export class CancellablePromise<T> {
     let fulfill;
     let reject;
     let callbackPromiseWithCancel: PromiseWithCancel<unknown> | undefined;
+    let canceled = false;
 
     if (onFulfilled) {
       fulfill = (value: T): TResult1 | PromiseLike<TResult1> => {
         const nextValue: TResult1 | PromiseLike<TResult1> = onFulfilled(value);
 
-        if (isPromiseWithCancel(nextValue))
+        if (isPromiseWithCancel(nextValue)) {
           callbackPromiseWithCancel = nextValue;
+          if (canceled) {
+            // so we don't throw away the original result, only cancel the resulting promise
+            nextValue.cancel();
+          }
+        }
 
         return nextValue;
       };
@@ -107,8 +113,13 @@ export class CancellablePromise<T> {
       reject = (reason: unknown): TResult2 | PromiseLike<TResult2> => {
         const nextValue: TResult2 | PromiseLike<TResult2> = onRejected(reason);
 
-        if (isPromiseWithCancel(nextValue))
+        if (isPromiseWithCancel(nextValue)) {
           callbackPromiseWithCancel = nextValue;
+          if (canceled) {
+            // so we don't throw away the original error, only cancel the resulting promise
+            nextValue.cancel();
+          }
+        }
 
         return nextValue;
       };
@@ -118,6 +129,7 @@ export class CancellablePromise<T> {
 
     const newCancel = () => {
       this.cancel();
+      canceled = true;
       callbackPromiseWithCancel?.cancel();
     };
 
